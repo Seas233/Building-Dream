@@ -18,7 +18,7 @@
 #main_1{
     background-image: url("../public/background_1.png");
     background-size: cover;
-    width: 100vw;
+    width: 100%;
     height: 80vh;
     background-position: center center;
     background-repeat: no-repeat;
