@@ -12,6 +12,7 @@ const goto_login = () => {
 </script>
 
 <template>
+
     <div id="app_head">
         <div id="app_head_left">筑梦云窗</div>
          <div id="app_head_right">
@@ -22,8 +23,11 @@ const goto_login = () => {
             <div  @click="goto_login">登录</div>
         </div>
     </div>
+
+    <router-view></router-view>
+
+    <!---->
     <div id="app_container">
-        <router-view></router-view>
         <div id="app_buttom">
             <div>关注我们</div>
             <div>
@@ -97,7 +101,7 @@ const goto_login = () => {
 #app_container{
     margin: 0 auto;
     height: auto;
-    width: 1700px;
+    width: 100vw;
     background-color: white;
 }
 
