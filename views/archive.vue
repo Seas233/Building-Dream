@@ -1,21 +1,14 @@
 <script setup>
-import {ref,computed} from "vue";
-import { useRouter } from 'vue-router';
-
-const router = useRouter()
-const goto_archive = () => {
-    router.push('/archive')
-}
-
+import {ref} from "vue";
 let coin = ref(114514)
-let name = ref("小丽")
+let archive_number=ref(1)
 </script>
 
-<template>    
+<template>
     <div style="height: 100px;"></div>
 
     <div id="head">
-        <div id="per_2">个人主页
+        <div id="per_2">个人档案室
             <div id="per_2_1"></div>
         </div>
         <div id="head_ri">
@@ -26,18 +19,34 @@ let name = ref("小丽")
             <div id="head_ri_1"></div>
         </div>
     </div>
-
     <div style="height: 100px;"></div>
 
     <div id="per_3">
         <div id="per_3_1"></div>
         <div id="per_3_2">
-            <div></div>
-        </div>
-        <div id="per_3_3">
-            <div @click="goto_archive" style="background-color: wheat;">个人档案室1</div>
+            <div id="per_3_2_back"></div>
+            <div id="per_3_2_back_number">{{ archive_number }}</div>
+            <div id="per_3_2_container">
+                <div id="per_3_2_file">
+                    <div>
+                        <span>应对气候变化</span>
+                    </div>
+                </div>
+                <div id="per_3_2_file">
+                    <div>
+                        <span>应对气候变化</span>
+                    </div>
+                </div>
+                <div id="per_3_2_file">
+                    <div>
+                        <span>应对气候变化</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
 </template>
 
 <style scoped>
@@ -127,7 +136,7 @@ let name = ref("小丽")
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: 40% 35% 25%;
+    grid-template-columns: 15% 85% ;
 }
 
 #per_3_1{
@@ -138,25 +147,75 @@ let name = ref("小丽")
 }
 
 #per_3_2{
-    width: 100%;
-    height: 100%;
     position: relative;
 }
 
-#per_3_2>*{
-    height: 80%;
-    width: 100%;
-    background-image: url("../public/女1成.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+
+#per_3_2_container{
+    width: 85vw;
+    height: 60vh;
+    margin-right: 1vw;
+    display: flex;
     position: absolute;
-    left: 10%;
-    bottom: 0;
+    top:10%;
 }
 
-#per_3_3{
-    width: 100%;
-    height: 100%;
-    background-color: red;
+#per_3_2_file{
+    width: 20vw;
+    height: 60vh;
+    margin: 0 4vw;
+    background: url('/public/video recommendation/p4.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 2vw;
 }
+
+#per_3_2_file>div{
+    width: inherit;
+    height: 30%;
+    background: linear-gradient(0.13deg, #005FAE 0.07%, rgba(0, 95, 174, 0.64) 55.64%, rgba(0, 95, 174, 0) 91.64%);
+    position: absolute;
+    bottom: 0;
+    border-radius: 2vw;
+}
+
+#per_3_2_file>div>span{
+    width: 100%;
+    height: 2vh;
+    font-family: Inter;
+    font-size: 3vh;
+    font-weight: 700;
+    line-height: 3vh;
+    text-align: left;
+    color:#FFFFFF;
+    position: absolute;
+    bottom: 5vh;
+    left: 2vw;
+;
+
+}
+
+#per_3_2_back{
+    width: 100%;
+    height: 52%;
+    margin: 12% 0;
+    background-color: rgba(213, 239, 128, 1) ;
+    z-index: -2;
+    position: absolute;
+    top:10%
+}
+
+#per_3_2_back_number{
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 12vh;
+    font-style: italic;
+    font-weight: 900;
+    line-height: 12vh;
+    text-align: left;
+    position: absolute;
+    right: 2vw;
+    top: 68vh;
+}
+
 </style>
