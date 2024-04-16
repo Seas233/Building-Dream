@@ -38,33 +38,32 @@ const goto_person = () => {
 
     <router-view></router-view>
 
-    <!---->
-    <div id="app_container">
-        <div id="app_buttom">
-            <div>关注我们</div>
-            <div>
-                <div>
-                    <li>快速入口</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                </div>
-                <div>
-                    <li>关于我们</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                </div>
-                <div>
-                    <li>联系我们</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                    <li>一些选项</li>
-                </div>
-            </div>
-        </div>
-    </div>
+
+   <div id="app_buttom">
+       <div>关注我们</div>
+       <div>
+           <div>
+               <li>快速入口</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+           </div>
+           <div>
+               <li>关于我们</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+           </div>
+           <div>
+               <li>联系我们</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+               <li>一些选项</li>
+           </div>
+       </div>
+   </div>
+
     
 
 
@@ -76,52 +75,49 @@ const goto_person = () => {
     height: 70px;
     display: flex;
     align-items: center;
-    background-color: rgb(105,179,31)
+    justify-content: space-between;
+    background-color: rgb(105,179,31);
+    padding: 0 140px;
+    min-width: 1200px;
 }
 
 #app_head_left{
-    font-size: 20px;
     /*font-family: Inter;*/
     color: #FFF;
     font-size: 24px;
     font-weight: 500;
     line-height: 22px;
     letter-spacing: 0.2em;
-    position:absolute;
-    left: 97px;
+    /* position:absolute; */
+    /* left: 97px; */
+    width: 124px;
 }
 
 
 #app_head_right{
-    width: 100vw;
+    width: auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     /*flex-direction: row-reverse;*/
 }
 
 #app_head_right *{
     /*font-family: Inter;*/
+    width: 104px;
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
-    text-align: left;
+    text-align: right;
     color: #FFF;
-    margin-right: 72px;
-}
-
-#app_container{
-    margin: 0 auto;
-    height: auto;
-    width: 100vw;
-    background-color: white;
 }
 
 #app_buttom{
+    margin: 0 auto;
+    padding: 0 1.4rem;
     background-color: #F7F8FB;
     margin-top: 10px;
     height: 400px;
-    width: 100%;    
+    width: 100%;
 }
 
 li{
