@@ -9,6 +9,18 @@ router.push('/main')
 const goto_login = () => {
     router.push('/login')
 }
+
+const goto_main = () => {
+    router.push('/main')
+}
+
+const goto_vi_re = () => {
+    router.push('/video')
+}
+
+const goto_person = () => {
+    router.push('/person')
+}
 </script>
 
 <template>
@@ -16,9 +28,9 @@ const goto_login = () => {
     <div id="app_head">
         <div id="app_head_left">筑梦云窗</div>
          <div id="app_head_right">
-            <div >首页</div>
-            <div >视频推荐</div>
-            <div >个人主页</div>
+            <div @click="goto_main">首页</div>
+            <div @click="goto_vi_re">视频推荐</div>
+            <div @click="goto_person">个人主页</div>
             <div >联系我们</div>
             <div  @click="goto_login">登录</div>
         </div>
@@ -60,7 +72,7 @@ const goto_login = () => {
 
 <style scoped>
 #app_head{
-    width: 100vw;
+    width: 100%;
     height: 70px;
     display: flex;
     align-items: center;
