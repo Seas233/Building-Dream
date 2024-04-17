@@ -133,7 +133,8 @@ li{
 
 #app_buttom>div{
     margin: 10px auto;
-    width: 1440px;
+    /*width: 1440px;
+    /* */width: 100%;
     position: relative;
 }
 
