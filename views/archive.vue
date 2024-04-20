@@ -22,7 +22,13 @@ let archive_number=ref(1)
     <div style="height: 100px;"></div>
 
     <div id="per_3">
-        <div id="per_3_1"></div>
+        <div id="per_3_1">
+            <div id="per_3_1_number_1" class="per_3_1_number">1</div>
+            <div id="per_3_1_number_2" class="per_3_1_number">2</div>
+            <div id="per_3_1_number_3" class="per_3_1_number">3</div>
+            <div id="per_3_1_number_4" class="per_3_1_number">4</div>
+            <div id="per_3_1_switch">点击切换其他档案室</div>
+        </div>
         <div id="per_3_2">
             <div id="per_3_2_back"></div>
             <div id="per_3_2_back_number">{{ archive_number }}</div>
@@ -144,7 +150,52 @@ let archive_number=ref(1)
     height: 100%;
     background-color: rgba(213, 239, 128, 1);
     border-radius: 0 2vw 2vw 0;
+    position: relative;
 }
+
+.per_3_1_number{
+    width: 5vw;
+    height: 8vh;
+    left: 2vw;
+    position: absolute;
+    background-color: #FFFFFF;
+    border-radius: 4vw;
+    color: #82D526;
+    text-align: center;
+    font-size: 6vh;
+    line-height: 8vh;
+    font-weight: 500;
+}
+
+#per_3_1_number_1{
+    top: 20vh;
+}
+#per_3_1_number_2{
+    top: 34vh;
+}
+#per_3_1_number_3{
+    top: 48vh;
+}
+#per_3_1_number_4{
+    top: 62vh;
+}
+
+
+#per_3_1_switch{
+    position: absolute;
+    top: 50vh;
+    right: 1vw;
+    color: #FFFFFF;
+    width: 1.3vw;
+    height: 28vh;
+    font-family: Inter;
+    font-size: 3vh;
+    font-weight: 600;
+    line-height: 4vh;
+    text-align: center;
+
+}
+
 
 #per_3_2{
     position: relative;
@@ -153,16 +204,16 @@ let archive_number=ref(1)
 
 #per_3_2_container{
     width: 85vw;
-    height: 60vh;
+    height: 54vh;
     margin-right: 1vw;
     display: flex;
     position: absolute;
-    top:10%;
+    top:18%;
 }
 
 #per_3_2_file{
-    width: 20vw;
-    height: 60vh;
+    width: 18vw;
+    height: 54vh;
     margin: 0 4vw;
     background: url('/public/video recommendation/p4.png');
     background-size: cover;

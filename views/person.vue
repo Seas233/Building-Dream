@@ -33,6 +33,7 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
 
     <div style="height: 100px;"></div>
 
+    
     <div id="per_3">
         <div id="per_3_1">
             <div id="per_3_1_1">{{ name }}</div>
@@ -49,9 +50,11 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
             <div class="per_3_1_t">个人简介：{{ self_introduction }}</div>
 
         </div>
+
         <div id="per_3_2">
             <div></div>
         </div>
+        
         <div id="per_3_3">
             <arc_in_per title="标题自拟" num="1"/>
             <arc_in_per title="标题自拟" num="2"/>
@@ -71,7 +74,7 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
 }
 
 #per_2{
-    width: 100vw;
+    width: 100%;
     color: rgba(130, 213, 38, 1);
     /*font-family: Inter;*/
     font-size: 60px;
@@ -203,6 +206,7 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
     line-height: 60px;
     text-align: left;
     margin-left: 50px;
+    margin-right: 50px;
     color: white;
 }
 

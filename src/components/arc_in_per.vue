@@ -33,6 +33,7 @@ const props = defineProps({
 
 <style scoped>
 #a_1{
+    width: 100%;
     display: flex;
     flex-direction: row;
     margin-bottom: 50px;
