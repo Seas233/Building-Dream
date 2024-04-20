@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-router.push('/main')
+router.push('/map');
 
 const goto_login = () => {
     router.push('/login')
@@ -20,6 +20,10 @@ const goto_vi_re = () => {
 
 const goto_person = () => {
     router.push('/person')
+}
+
+const goto_map = () => {
+    router.push('/map')
 }
 </script>
 
