@@ -7,6 +7,8 @@ const close = () =>{
     emit('setting_close');
 }
 let Exhibition_Room = ref(true);
+let Personal_image = ref(true);
+let language = ref(1)
 
 </script>
 
@@ -25,29 +27,49 @@ let Exhibition_Room = ref(true);
                     </div>
 
                     <div class="a_head t_1">隐私</div>
-                    <div>
-                        <div class="t_2">陈列室是否开放
-                        </div>
 
-                        <div class="butt_1" @click="() => {Exhibition_Room = true}">
+                    <div class="a_4 t_2">
+                        陈列室是否开放
+                        <div class="butt_1" @click="() => {Exhibition_Room = true;}">
                             <div v-if="Exhibition_Room"></div>
                         </div>
                         是
-                        <div class="butt_1" @click="() => {Exhibition_Room = false}">
+                        <div class="butt_1" @click="() => {Exhibition_Room = false;}">
                             <div v-if="!Exhibition_Room"></div>
                         </div>
                         否
                     </div>
-                        
-                    
-                    <div class="t_2">个人形象是否开放</div>
+
+                    <div class="a_4 t_2">
+                        个人形象是否开放
+                        <div class="butt_1" @click="() => {Personal_image = true;}">
+                            <div v-if="Personal_image"></div>
+                        </div>
+                        是
+                        <div class="butt_1" @click="() => {Personal_image = false;}">
+                            <div v-if="!Personal_image"></div>
+                        </div>
+                        否
+                    </div>
 
                     <div class="a_head t_1">语言</div>
-                    <div class="t_2">语言选项</div>
 
+                    <div class="a_4 t_2">
+                        语言选项
+                        <div class="butt_1" @click="() => {language = 1;}">
+                            <div v-if="language == 1"></div>
+                        </div>
+                        中文
+                        <div class="butt_1" @click="() => {language = 2;}">
+                            <div v-if="language == 2"></div>
+                        </div>
+                        英语
+                    </div>
+                    
                     <div class="a_head t_1">声音</div>
-                    <div class="t_2">背景音乐</div>
-                    <div class="t_2">音量调节</div>
+
+                    <div class="t_2" style="margin-left: 130px;margin-top: 20px;">背景音乐</div>
+                    <div class="t_2" style="margin-left: 130px;margin-top: 20px;">音量调节</div>
                 </div>
             </div>
             
@@ -76,10 +98,7 @@ let Exhibition_Room = ref(true);
     font-family: Inter;
     font-weight: 600;
 
-    margin-top: 20px;
-    margin-left: 130px;
     position: relative;
-    width: 250px;
 
     display: flex;
 }
@@ -145,7 +164,26 @@ let Exhibition_Room = ref(true);
 .butt_1{
     width: 25px;
     height: 25px;
-    border: #AED132;
-    background-color: black;
+    border: 2px solid #AED132;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.butt_1>*{
+    width: 13px;
+    height: 13px;
+    background-color: #AED132;
+    border-radius: 50%;
+}
+
+.a_4{
+    margin-left: 130px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 50% 5% 20% 5% 20%;
+    align-items: center;
 }
 </style>

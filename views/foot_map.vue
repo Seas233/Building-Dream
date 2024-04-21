@@ -1,10 +1,11 @@
 <script setup>
-import {ref,computed} from "vue";
+import {ref} from "vue";
 
 import setting from "../src/components/setting.vue";
 
 let coin = ref(114514);
-let if_setting_open = ref(true);
+let if_setting_open = ref(false);
+
 
 </script>
 
@@ -14,17 +15,16 @@ let if_setting_open = ref(true);
     <div style="height: 100px;"></div>
 
     <div id="head">
-        <div id="per_2">个人主页
+        <div id="per_2">足迹地图
             <div id="per_2_1"></div>
         </div>
         <div id="head_ri">
+
             <div id="head_ri_2">
                 <div id="head_ri_2_1"></div>
                 <div id="head_ri_2_2">{{ coin }}</div>
             </div>
-            <div id="head_ri_1" @click="() => {if_setting_open = true;console.log(if_setting_open)}">
-                
-            </div>
+            <div id="head_ri_1" @click="if_setting_open = true;"></div>
         </div>
     </div>
 
@@ -33,7 +33,7 @@ let if_setting_open = ref(true);
             <div style="left: 70%;top: 40%;"></div>
             <div style="left: 55%;top: 70%;"></div>
         </div>
-        <div id="map_1_2" @click="() => {if_setting_open = true;console.log(if_setting_open)}"></div>
+        <div id="map_1_2" @click=""></div>
     </div>
 </template>
 
@@ -86,6 +86,8 @@ let if_setting_open = ref(true);
     background-repeat: no-repeat;
     margin-right: 60px;
     margin-left: 60px;
+    position: relative;
+    z-index: 100;
 }
 
 #head_ri_2{

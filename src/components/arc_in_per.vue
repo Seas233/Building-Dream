@@ -10,7 +10,7 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
     num: {
-        type: Number,
+        type: String,
         default: "1"
     },
     title:{

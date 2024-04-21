@@ -1,21 +1,20 @@
 <script setup>
-import {ref,computed} from "vue";
-import { useRouter } from 'vue-router';
+import {ref} from "vue";
+
+import setting from "../src/components/setting.vue";
 import arc_in_per from "../src/components/arc_in_per.vue";
 
-const router = useRouter()
-const goto_archive = () => {
-    router.push('/archive')
-}
-
 let coin = ref(114514)
+let if_setting_open = ref(false);
 let name = ref("小丽")
 let school = ref("山东大学")
 let Personal_saying = ref("学无止境，气养浩然")
 let self_introduction = ref("来自山东大学体育学院的大一学生")
 </script>
 
-<template>    
+<template>
+    <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
+    
     <div style="height: 100px;"></div>
 
     <div id="head">
@@ -23,11 +22,12 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
             <div id="per_2_1"></div>
         </div>
         <div id="head_ri">
+
             <div id="head_ri_2">
                 <div id="head_ri_2_1"></div>
                 <div id="head_ri_2_2">{{ coin }}</div>
             </div>
-            <div id="head_ri_1"></div>
+            <div id="head_ri_1" @click="if_setting_open = true;"></div>
         </div>
     </div>
 
@@ -56,10 +56,10 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
         </div>
         
         <div id="per_3_3">
-            <arc_in_per title="标题自拟" num="1"/>
-            <arc_in_per title="标题自拟" num="2"/>
-            <arc_in_per title="标题自拟" num="3"/>
-            <arc_in_per title="标题自拟" num="4"/>
+            <arc_in_per title="标题自拟" num=1 />
+            <arc_in_per title="标题自拟" num=2 />
+            <arc_in_per title="标题自拟" num=3 />
+            <arc_in_per title="标题自拟" num=4 />
         </div>
     </div>
 </template>
@@ -113,6 +113,8 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
     background-repeat: no-repeat;
     margin-right: 60px;
     margin-left: 60px;
+    position: relative;
+    z-index: 100;
 }
 
 #head_ri_2{

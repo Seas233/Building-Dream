@@ -1,10 +1,17 @@
 <script setup>
 import {ref} from "vue";
-let coin = ref(114514)
+
+import setting from "../src/components/setting.vue";
+
+let coin = ref(114514);
+let if_setting_open = ref(false);
+
 let archive_number=ref(1)
 </script>
 
 <template>
+    <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
+    
     <div style="height: 100px;"></div>
 
     <div id="head">
@@ -12,13 +19,15 @@ let archive_number=ref(1)
             <div id="per_2_1"></div>
         </div>
         <div id="head_ri">
+
             <div id="head_ri_2">
                 <div id="head_ri_2_1"></div>
                 <div id="head_ri_2_2">{{ coin }}</div>
             </div>
-            <div id="head_ri_1"></div>
+            <div id="head_ri_1" @click="if_setting_open = true;"></div>
         </div>
     </div>
+
     <div style="height: 100px;"></div>
 
     <div id="per_3">
@@ -59,13 +68,13 @@ let archive_number=ref(1)
 #head{
     position: relative;
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: 70px;
     align-items: center;
 }
 
 #per_2{
-    width: 100vw;
+    width: 100%;
     color: rgba(130, 213, 38, 1);
     /*font-family: Inter;*/
     font-size: 60px;
@@ -104,6 +113,8 @@ let archive_number=ref(1)
     background-repeat: no-repeat;
     margin-right: 60px;
     margin-left: 60px;
+    position: relative;
+    z-index: 100;
 }
 
 #head_ri_2{
