@@ -1,5 +1,8 @@
 <script setup>
 import {ref} from "vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 import setting from "../src/components/setting.vue";
 import arc_in_per from "../src/components/arc_in_per.vue";
@@ -56,6 +59,10 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
         </div>
         
         <div id="per_3_3">
+            <div id="per_3_3_1" @click="router.push('/map')">
+                <div id="per_3_3_3">支 教 地 图</div>
+                <div id="per_3_3_2"></div>
+            </div>
             <arc_in_per title="标题自拟" num=1 />
             <arc_in_per title="标题自拟" num=2 />
             <arc_in_per title="标题自拟" num=3 />
@@ -232,5 +239,32 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
 #per_3_3{
     width: 100%;
     height: 100%;
+}
+
+#per_3_3_1{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 50px;
+}
+
+#per_3_3_2{ 
+    background-image: url("../public/坐标\ 1.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+}
+
+#per_3_3_3{
+    font-family: Inter;
+    font-size: 29px;
+    font-weight: 600;
+    line-height: 60px;
+    text-align: right;
+    color: #B5D051;
+    margin-right: 20px;
+    margin-left: 60px;
 }
 </style>

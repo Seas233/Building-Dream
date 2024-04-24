@@ -44,17 +44,17 @@ let archive_number=ref(1)
             <div id="per_3_2_container">
                 <div id="per_3_2_file">
                     <div>
-                        <span>应对气候变化</span>
+                        <span>书中自有黄金屋</span>
                     </div>
                 </div>
                 <div id="per_3_2_file">
                     <div>
-                        <span>应对气候变化</span>
+                        <span>书中自有黄金屋</span>
                     </div>
                 </div>
                 <div id="per_3_2_file">
                     <div>
-                        <span>应对气候变化</span>
+                        <span>书中自有黄金屋</span>
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@ let archive_number=ref(1)
     width: 18vw;
     height: 54vh;
     margin: 0 4vw;
-    background: url('/public/video recommendation/p4.png');
+    background: url('/public/video recommendation/p2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 2vw;
@@ -235,7 +235,8 @@ let archive_number=ref(1)
 #per_3_2_file>div{
     width: inherit;
     height: 30%;
-    background: linear-gradient(0.13deg, #005FAE 0.07%, rgba(0, 95, 174, 0.64) 55.64%, rgba(0, 95, 174, 0) 91.64%);
+    background-image: linear-gradient(rgba(81, 154, 210,0),#483D2F);
+    /*background: linear-gradient(0.13deg, #005FAE 0.07%, rgba(0, 95, 174, 0.64) 55.64%, rgba(0, 95, 174, 0) 91.64%);*/
     position: absolute;
     bottom: 0;
     border-radius: 2vw;
