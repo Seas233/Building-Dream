@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-router.push('/map');
+router.push('/main');
 
 const goto_login = () => {
     router.push('/login')
