@@ -15,13 +15,13 @@
             <div style="height: 10vw;"></div>
             <div class="video_3_1" id="video_3_1_1">
                 <div class="video_3_1_">
-                    <div>信息无障碍</div>
+                    <div>我的故事</div>
                 </div>
             </div>
             <div style="height: 10px;"></div>
             <div class="video_3_1" id="video_3_1_2">
                 <div class="video_3_1_">
-                    <div>应急救助</div>
+                    <div>书中自有黄金屋</div>
                 </div>
             </div>
         </div>
@@ -29,13 +29,13 @@
         <div>
             <div class="video_3_1" id="video_3_1_3">
                 <div class="video_3_1_">
-                    <div>乡村发展</div>
+                    <div>我和他们</div>
                 </div>
             </div>
             <div style="height: 10px;"></div>
             <div class="video_3_1" id="video_3_1_4">
                 <div class="video_3_1_">
-                    <div>应急救助</div>
+                    <div>我爱学习</div>
                 </div>
             </div>
         </div>
@@ -44,13 +44,13 @@
             <div style="height: 10vw;"></div>
             <div class="video_3_1" id="video_3_1_5">
                 <div class="video_3_1_">
-                    <div>青少年成长</div>
+                    <div>他们俩</div>
                 </div>
             </div>
             <div style="height: 10px;"></div>
             <div class="video_3_1" id="video_3_1_6">
                 <div class="video_3_1_">
-                    <div>应对气候变化</div>
+                    <div>知识超人</div>
                 </div>
             </div>
         </div>
@@ -58,13 +58,13 @@
         <div>
             <div class="video_3_1" id="video_3_1_7">
                 <div class="video_3_1_">
-                    <div>生态保护</div>
+                    <div>青少年成长</div>
                 </div>
             </div>
             <div style="height: 10px;"></div>
             <div class="video_3_1" id="video_3_1_8">
                 <div class="video_3_1_">
-                    <div>员工公益</div>
+                    <div>趣味课堂</div>
                 </div>
             </div>
         </div>
@@ -73,13 +73,13 @@
             <div style="height: 10vw;"></div>
             <div class="video_3_1" id="video_3_1_9">
                 <div class="video_3_1_">
-                    <div>文化传承</div>
+                    <div>大山里的红领巾</div>
                 </div>
             </div>
             <div style="height: 10px;"></div>
             <div class="video_3_1" id="video_3_1_10">
                 <div class="video_3_1_">
-                    <div>公益数字化</div>
+                    <div>魔法车</div>
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
 #video_3{
     display: grid;
     grid-template-columns: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr;
-    width: 100vw;
+    width: 100%;
 }
 
 .video_3_1{
@@ -135,83 +135,83 @@
 }
 
 #video_3_1_1{
-    background-image: url("../public/video recommendation/p1.png");
+    background-image: url("../public/video recommendation/p1.jpg");
 }
 
 #video_3_1_1>*{
-    background-image: linear-gradient(rgba(81, 154, 210,0),rgba(81, 154, 210, 1));
+    background-image: linear-gradient(rgba(81, 154, 210,0),#030200);
 }
 
 #video_3_1_2{
-    background-image: url("../public/video recommendation/p6.jpg");
+    background-image: url("../public/video recommendation/p2.jpg");
 }
 
 #video_3_1_2>*{
-    background-image: linear-gradient(rgba(224, 210, 183, 0),rgba(224, 210, 183, 1));
+    background-image: linear-gradient(rgba(224, 210, 183, 0),#483D2F);
 }
 
 #video_3_1_3{
-    background-image: url("../public/video recommendation/p10.png");
+    background-image: url("../public/video recommendation/p3.jpg");
 }
 
 #video_3_1_3>*{
-    background-image: linear-gradient(rgba(212, 216, 26, 0),rgba(212, 216, 26, 1));
+    background-image: linear-gradient(rgba(212, 216, 26, 0),#3A4C3E);
 }
 
 #video_3_1_4{
-    background-image: url("../public/video recommendation/p5.png");
+    background-image: url("../public/video recommendation/p4.jpg");
 }
 
 #video_3_1_4>*{
-    background-image: linear-gradient(rgba(250, 214, 94, 0),rgba(250, 214, 94, 1));
+    background-image: linear-gradient(rgba(250, 214, 94, 0),#FAD65E);
 }
 
 #video_3_1_5{
-    background-image: url("../public/video recommendation/p9.png");
+    background-image: url("../public/video recommendation/p5.png");
 }
 
 #video_3_1_5>*{
-    background-image: linear-gradient(rgba(171, 111, 73, 0),rgba(171, 111, 73, 1));
+    background-image: linear-gradient(rgba(171, 111, 73, 0),#B28D5A);
 }
 
 #video_3_1_6{
-    background-image: url("../public/video recommendation/p4.png");
+    background-image: url("../public/video recommendation/p6.jpg");
 }
 
 #video_3_1_6>*{
-    background-image: linear-gradient(rgba(0, 95, 174, 0),rgba(0, 95, 174, 1));
+    background-image: linear-gradient(rgba(0, 95, 174, 0),#005FAE);
 }
 
 #video_3_1_7{
-    background-image: url("../public/video recommendation/p8.jpg");
+    background-image: url("../public/video recommendation/p7.jpg");
 }
 
 #video_3_1_7>*{
-    background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 1));
+    background-image: linear-gradient(rgba(0, 0, 0, 0),#000000);
 }
 
 #video_3_1_8{
-    background-image: url("../public/video recommendation/p3.png");
+    background-image: url("../public/video recommendation/p8.png");
 }
 
 #video_3_1_8>*{
-    background-image: linear-gradient(rgba(83, 146, 213, 0),rgba(83, 146, 213, 1));
+    background-image: linear-gradient(rgba(83, 146, 213, 0),#393F3D);
 }
 
 #video_3_1_9{
-    background-image: url("../public/video recommendation/p7.png");
+    background-image: url("../public/video recommendation/p9.jpg");
 }
 
 #video_3_1_9>*{
-    background-image: linear-gradient(rgba(218, 59, 9, 0),rgba(218, 59, 9, 1));
+    background-image: linear-gradient(rgba(218, 59, 9, 0),#DA3B09);
 }
 
 #video_3_1_10{
-    background-image: url("../public/video recommendation/p2.png");
+    background-image: url("../public/video recommendation/p10.jpg");
 }
 
 #video_3_1_10>*{
-    background-image: linear-gradient(rgba(15, 23, 215, 0),rgba(15, 23, 215, 1));
+    background-image: linear-gradient(rgba(15, 23, 215, 0),#371E1C);
 }
 
 .video_3_1>*{
