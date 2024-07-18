@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-router.push('/main');
+router.push('/create_article');
 
 const goto_login = () => {
     router.push('/login')
