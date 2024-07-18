@@ -1,9 +1,12 @@
 <script setup>
 import {ref} from "vue";
+import { useRouter } from 'vue-router';
 
 import setting from "../src/components/setting.vue";
+import headline from "../src/components/headline.vue";
 
-let coin = ref(114514);
+const router = useRouter()
+
 let if_setting_open = ref(false);
 
 let archive_number=ref(1)
@@ -12,21 +15,7 @@ let archive_number=ref(1)
 <template>
     <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
     
-    <div style="height: 100px;"></div>
-
-    <div id="head">
-        <div id="per_2">个人档案室
-            <div id="per_2_1"></div>
-        </div>
-        <div id="head_ri">
-
-            <div id="head_ri_2">
-                <div id="head_ri_2_1"></div>
-                <div id="head_ri_2_2">{{ coin }}</div>
-            </div>
-            <div id="head_ri_1" @click="if_setting_open = true;"></div>
-        </div>
-    </div>
+    <headline title="个人档案室"/>
 
     <div style="height: 100px;"></div>
 
@@ -42,7 +31,7 @@ let archive_number=ref(1)
             <div id="per_3_2_back"></div>
             <div id="per_3_2_back_number">{{ archive_number }}</div>
             <div id="per_3_2_container">
-                <div id="per_3_2_file">
+                <div id="per_3_2_file" @click="router.push('/article')">
                     <div>
                         <span>书中自有黄金屋</span>
                     </div>
