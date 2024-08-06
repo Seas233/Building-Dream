@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-router.push('/create_article');
+//router.push('/create_article');
 
 const goto_login = () => {
     router.push('/login')
@@ -80,16 +80,19 @@ const goto_map = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgb(105,179,31);
+    background-color: rgba(255,255,255,0.6);
     padding: 0 140px;
     min-width: 1200px;
+
+    position: absolute;
+    z-index: 1000;
 }
 
 #app_head_left{
     /*font-family: Inter;*/
-    color: #FFF;
-    font-size: 24px;
-    font-weight: 500;
+    color: #A6E67B;
+    font-size: 1.5em;
+    font-weight: 600;
     line-height: 22px;
     letter-spacing: 0.2em;
     /* position:absolute; */
@@ -108,11 +111,10 @@ const goto_map = () => {
 #app_head_right *{
     /*font-family: Inter;*/
     width: 104px;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 1.2em;
     line-height: 22px;
     text-align: right;
-    color: #FFF;
+    color: #A6E67B;
 }
 
 #app_buttom{

@@ -2,6 +2,7 @@
 </script>
 
 <template>
+    <div style="height: 70px;"></div>
     <div style="height: 100px;"></div>
 
     <div id="video_2">视频推荐

@@ -13,6 +13,8 @@ let archive_number=ref(1)
 </script>
 
 <template>
+    <div style="height: 70px;"></div>
+    
     <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
     
     <headline title="个人档案室"/>

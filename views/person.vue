@@ -17,6 +17,8 @@ let self_introduction = ref("来自山东大学体育学院的大一学生")
 </script>
 
 <template>
+    
+    <div style="height: 70px;"></div>
     <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
     
     <headline title="个人主页"/>

@@ -9,6 +9,8 @@ let if_setting_open = ref(false);
 </script>
 
 <template>
+    
+    <div style="height: 70px;"></div>
     <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
     
     <headline title="足迹地图"/>
