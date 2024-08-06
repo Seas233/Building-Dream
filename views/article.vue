@@ -54,6 +54,8 @@ onMounted(() => {
 </script>
 
 <template>
+    <div style="height: 70px;"></div>
+
     <video src="" >
 
     </video>

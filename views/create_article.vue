@@ -71,6 +71,8 @@ function send_paper()
 </script>
 
 <template>
+    <div style="height: 70px;"></div>
+
     <div class="type_choice">
         <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#FF0000' : '#00FF00'}" @click="type = 'text'"></div>
         <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#FF0000' : '#00FF00'}" @click="type = 'pic'"></div>
