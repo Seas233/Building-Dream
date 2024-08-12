@@ -1,19 +1,19 @@
 <script setup>
-import {ref} from "vue";
-import { useRouter } from 'vue-router';
-import headline from "../src/components/headline.vue";
+    import {ref} from "vue";
+    import { useRouter } from 'vue-router';
+    import headline from "../src/components/headline.vue";
 
-const router = useRouter()
+    const router = useRouter()
 
-import setting from "../src/components/setting.vue";
-import arc_in_per from "../src/components/arc_in_per.vue";
+    import setting from "../src/components/setting.vue";
+    import arc_in_per from "../src/components/arc_in_per.vue";
 
-let coin = ref(114514)
-let if_setting_open = ref(false);
-let name = ref("小丽")
-let school = ref("山东大学")
-let Personal_saying = ref("学无止境，气养浩然")
-let self_introduction = ref("来自山东大学体育学院的大一学生")
+    let coin = ref(114514)
+    let if_setting_open = ref(false);
+    let name = ref("小丽")
+    let school = ref("山东大学")
+    let Personal_saying = ref("学无止境，气养浩然")
+    let self_introduction = ref("来自山东大学体育学院的大一学生")
 </script>
 
 <template>

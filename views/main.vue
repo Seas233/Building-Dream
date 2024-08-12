@@ -2,20 +2,48 @@
 </script>
 
 <template>
-
-    <div id="main_1"></div>
-
-    <div style="height: 100px;"></div>
+    
+    <div id="lo_ele">
+        <div id="lo_ele_1"></div>
+        <div id="lo_ele_2"></div>
+    </div>
 </template>
 
 <style scoped>
-#main_1{
-    background-image: url("../public/background_1.png");
-    background-size: cover;
-    width: 100%;
-    height: 80vh;
-    background-position: center center;
-    background-repeat: no-repeat;
+#lo_ele
+{
     overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+
+    width: 100%;
+    height: 100vh;
+    background-image: url("../public/login_bac.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+#lo_ele_1{
+    margin-bottom: 20px;
+    height: 80%;
+    width: 100%;
+    position: absolute;
+    background-image: url("../public/login_bac_white_pep.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#lo_ele_2{
+    margin-bottom: 20px;
+    height: 40%;
+    width: 100%;
+    position: absolute;
+    background-image: url("../public/login_bac_green_pep.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 </style>

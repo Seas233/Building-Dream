@@ -4,27 +4,8 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-//router.push('/create_article');
+//router.push('/main');
 
-const goto_login = () => {
-    router.push('/login')
-}
-
-const goto_main = () => {
-    router.push('/main')
-}
-
-const goto_vi_re = () => {
-    router.push('/video')
-}
-
-const goto_person = () => {
-    router.push('/person')
-}
-
-const goto_map = () => {
-    router.push('/map')
-}
 </script>
 
 <template>
@@ -32,11 +13,11 @@ const goto_map = () => {
     <div id="app_head">
         <div id="app_head_left">筑梦云窗</div>
          <div id="app_head_right">
-            <div @click="goto_main">首页</div>
-            <div @click="goto_vi_re">视频推荐</div>
-            <div @click="goto_person">个人主页</div>
-            <div >联系我们</div>
-            <div  @click="goto_login">登录</div>
+            <div @click="router.push('/login')">首页</div>
+            <div @click="router.push('/video')">视频推荐</div>
+            <div @click="router.push('/user/112')">个人主页</div>
+            <div>联系我们</div>
+            <div @click="router.push('/login')">登录</div>
         </div>
     </div>
 
@@ -44,6 +25,7 @@ const goto_map = () => {
 
 
    <div id="app_buttom">
+    <!--
        <div>关注我们</div>
        <div>
            <div>
@@ -65,7 +47,7 @@ const goto_map = () => {
                <li>一些选项</li>
                <li>一些选项</li>
            </div>
-       </div>
+       </div>-->
    </div>
 
     
@@ -85,7 +67,7 @@ const goto_map = () => {
     min-width: 1200px;
 
     position: absolute;
-    z-index: 1000;
+    z-index: 1001;
 }
 
 #app_head_left{
