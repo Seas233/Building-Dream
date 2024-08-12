@@ -1,111 +1,530 @@
 <script setup>
-import axios from 'axios';
-import { ref } from 'vue';
-/*async function search_word()
-  {
-    let inputElement = document.getElementById("top1");
-    entry = inputElement.value;
+    import axios from 'axios';
+    import { onMounted,ref, watch,reactive } from 'vue';
+    import setting from "../src/components/setting.vue";
+    import { useRouter } from 'vue-router';
 
-    const url = apiUrl + "/search/" + entry + "?dict_num=" + dict_num;
-    let response;
-    try{
-      const response_ = await axios.get(url);
-      response = response_.data.answer;
-      if(response == "没查到哎宝宝")
-      {
-        //没查到
-        console.log("没输出");
-        cout = ref('<div style="font-size: 16px">没查到哎宝宝</div>');
-      }
-      else
-      {
-        console.log("有输出");
-        cout = ref(response);
+    let apiUrl = 'http://localhost:5174';
 
-        console.log(is_menu_visable.value)
-      }
+    const router = useRouter();
+
+    onMounted(() => {
+        let pic = document.getElementById("profile_picture")
+        pic.style.height = pic.offsetWidth + "px";
+    })
+
+    const windowWidth = ref(window.innerWidth);
+    const windowHeight = ref(window.innerHeight);
+
+    watch(
+    () => [windowWidth.value, windowHeight.value],
+    () => {
+        let pic = document.getElementById("profile_picture")
+        pic.style.height = pic.offsetWidth + "px";
     }
-    catch (error) {
-      console.error("error!!!");
+    );
+
+    window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth
+    windowHeight.value = window.innerHeight
+    });
+
+    let user = {
+        name:"爱丽丝",
+        team:7355608,
+        ip:"千年",
+        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+        school:"千年科技学院",
+        likes_sum:100,
+        follow:100,
+        fans:100,
     }
-  }*/
+    let if_setting_open = ref(false);
+    let type = ref("text");
+    let ri_fun_on = ref(false);
 
-let apiUrl = 'http://localhost:5174';
-let type = ref("none");
-
-let sum = [];
-
-async function add_element()
-{
-    if(type.value == "text")
-    {
-        let inputElement = document.getElementById("top1");
-        
-        console.log(inputElement.value)
-
-        let add = {
+    let sum = reactive([
+        {
+            type:"headline",
+            content:"一棵树摇动另一棵树，一朵云推动另一朵云",
+        },
+        {
             type:"text",
-            content:inputElement.value,
-        };
+            content:"他们渴望走出大山，我们选择远赴千里;他们喜欢仰望星空，我们善于点亮希望;他们畅想诗和远方，我们播下种子，让未来不在苟且。"
+        },
+        {
+            type:"text",
+            content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
+        }
+    ]);
 
-        sum += add;
+    async function add_element()
+    {
+        if(type.value == "text")
+        {
+            let inputElement = document.getElementById("top1");
+            let add = {
+                type:"text",
+                content:inputElement.value,
+            };
+            if(add["content"] != "")
+            {
+                sum.push(add);
+            }
+            else{
+                console.log("这是空的诶。。。");
+            }
+        }
+        else if(type.value == "pic")
+        {
+            let fileInput = document.getElementById('pic');
+            const file = fileInput.files[0];
+            if(file)
+            {
+                let add = {
+                    type:"pic",
+                    file:file,
+                };
+                sum.push(add);
+            }
+        }
+
+        ri_fun_on.value = false;
+
+        const father = document.getElementById("mi_content");
+        const i = sum.length - 1;
+        if(sum[i]["type"] == "text")
+        {
+            let i_ele = document.createElement("div");
+            i_ele.innerHTML = sum[sum.length - 1]["content"];
+
+            //i_ele.classList.add("mi_cont_text");
+
+            i_ele.style = "color: #A6E67B;font-size: 1.2em;text-indent: 2em;"
+
+            if(sum[i - 1]["type"] != "text")
+            {
+                i_ele.style.marginTop = "30px";
+            }
+
+            father.appendChild(i_ele);
+        }
+        else if(sum[i]["type"] == "pic")
+        {
+            let i_ele = document.createElement("img");
+            //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+            i_ele.src = URL.createObjectURL(sum[i]["file"]);
+            i_ele.width = 300;
+            i_ele.className = "mi_cont_pic";
+            i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
+            father.appendChild(i_ele);
+        }
     }
-    console.log(sum)
-}
 
-function send_paper()
-{
-    axios.post(apiUrl + "/add_paper",{
-        "content": "ddsf",
-        "id": 0,
-        "ArchiveId": 0
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+    async function load_pic(){
+        let fileInput = document.getElementById('pic');
+        let preview = document.getElementById('pic_preview');
 
+        const file = fileInput.files[0];
+        /*if(file){
+            const reader = new FileReader();
+            reader.onload = function(e){
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }*/
+        
+        preview.src = URL.createObjectURL(file);
+    }
+
+    async function send_paper()
+    {
+        axios.post(apiUrl + "/add_paper",{
+            "content": sum,
+            "id": 0,
+            "ArchiveId": 0
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    //初始加载
+    onMounted(() => {
+        const father = document.getElementById("mi_content");
+        for(let i = 1;i < sum.length;i++)
+        {
+            if(sum[i]["type"] == "text")
+            {
+                let i_ele = document.createElement("div");
+                i_ele.innerHTML = sum[i]["content"];
+
+                //i_ele.classList.add("mi_cont_text");
+                //i_ele.className = "mi_cont_text";
+                i_ele.style = "color: #A6E67B;font-size: 1.2em;text-indent: 2em;"
+
+                father.appendChild(i_ele);
+            }
+            else if(sum[i]["type"] == "pic")
+            {
+                let i_ele = document.createElement("img");
+                i_ele.src = sum[i]["file"];
+                i_ele.className = "mi_cont_pic";
+                i_ele.width = "100%";
+                father.appendChild(i_ele);
+            }
+        }
+    })
 </script>
 
 <template>
-    <div style="height: 70px;"></div>
+    <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
 
-    <div class="type_choice">
-        <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#FF0000' : '#00FF00'}" @click="type = 'text'"></div>
-        <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#FF0000' : '#00FF00'}" @click="type = 'pic'"></div>
-        <div id="type_video" :style="{ 'background-color' : type == 'video' ? '#FF0000' : '#00FF00'}" @click="type = 'video'"></div>
-        <div id="type_aideo" :style="{ 'background-color' : type == 'aideo' ? '#FF0000' : '#00FF00'}" @click="type = 'aideo'"></div>
+    <div id="bac"></div>
+
+    <div id="lo">
+        <div id="le">
+            <div id="le_top">
+                <div id="profile_picture">
+                    <div id="change_pic"></div>
+                </div>
+
+                <div style="margin-left: 5%;display: grid;">
+                    <div id="name">{{ user["name"] }}</div>
+                    <div id="team">支教队伍:{{ user["team"] }}</div>
+                    <div id="ip">ip属地:{{ user["ip"] }}</div>
+                </div>
+            </div>
+
+            <div id="le_sec">个性签名：{{ user["personal_sign"] }}</div>
+
+            <div style="display: flex;">
+                <div id="school">{{ user["school"] }}</div><div></div>
+            </div>
+
+            <div id="le_th">
+                <div>
+                    <div>{{ user["follow"] }}</div>
+                    <p></p>
+                    关注
+                </div>
+
+                <div>
+                    <div>{{ user["fans"] }}</div>
+                    粉丝
+                </div>
+
+                <div>
+                    <div>{{ user["follow"] }}</div>
+                    获赞
+                </div>
+            </div>
+
+            <div id="le_fo"></div>
+            <div id="le_fi"></div>
+
+            <div id="le_si">
+                <div id="le_si_2">修改资料</div>
+                <div id="le_si_1" @click="if_setting_open = true;"></div>
+            </div>
+        </div>
+
+        <div id="mi">
+            <div id="mi_content">
+                <div id="mi_headline">{{ sum[0]["content"] }}</div>
+            </div>
+            <div id="append_buttom" @click="ri_fun_on = true"></div>
+        </div>
+
+        <div></div>
+
+        <div id="ri">
+            <div id="ri_fun" v-if="ri_fun_on">
+                <div id="ri_bu">
+                    <div id="type_choice">
+                        <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'text'">文字</div>
+                        <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'pic'">图片</div>
+                        <div id="type_aideo" :style="{ 'background-color' : type == 'aideo' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'aideo'">音频</div>
+                        <div id="type_video" :style="{ 'background-color' : type == 'video' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'video'">视频</div>
+                    </div>
+                    <div id="add" @click="add_element">添加</div>
+                </div>
+
+                <div v-if="type == 'text'" style="padding: 30px;">
+                    <textarea id="top1"></textarea>
+                </div>
+
+                <div v-if="type == 'pic'" style="padding: 30px;">
+                    <input type="file" accept="image/*" @change="load_pic" id="pic">
+                    <img id="pic_preview" alt="" width="100%">
+                </div>
+
+                <div v-if="type == 'video'">
+                    <input type="file" accept="video/*" @change="load_video">
+                </div>
+
+                <div v-if="type == 'audio'">
+                    <input type="file" accept="audio/*" @change="load_audio">
+                </div>
+            </div>
+        </div>
+        
+        <div></div>
     </div>
-
-    <div :v-if="type == 'text'">
-        <input type="text" id="top1">
-    </div>
-
-    <div @click="add_element" class="butt"></div>
-    <div @click="send_paper" class="butt"></div>
 </template>
 
 <style scoped>
-.type_choice{
+#bac{
+    position: fixed;
+    background-image: url("../public/login_bac.png");
+    width: 100vw;
+    height: 100vw;
+    background-repeat:no-repeat;
+    background-size:cover;
+    z-index: -10;
+}
+
+#lo{
+    width: 100%;
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 10fr 21fr 30px 10fr 30px;
+
+    padding-top: 120px;
+}
+
+#lo>*{
+    width: 100%;
+    height: 100%;
+}
+
+#le{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#le_top{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#profile_picture{
+    background-image: url("../public/头像.png");
+    background-size: cover;
+    border-radius: 50%; 
+    border: 3px solid white;
+    position: relative;
+}
+
+#change_pic{
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background-image: url("../public/更改头像.png");
+    background-size: cover;
+}
+
+#name{
+    color: #A6E67B;
+    font-size: 2em;
+    font-weight:900;
+}
+
+#team,#ip,#le_sec{
+    color: #A6E67B;
+    margin-top: 0.4em;
+    font-size: 1.5em;
+}
+
+#name,#team,#ip{
+    align-content: center;
+}
+
+#le_sec{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#school{
+    background-color: #A6E67B;
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 30px;
+
+    height: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 1em;
+
     display: flex;
+    align-items: center;
     justify-content: center;
 }
 
-.type_choice>*{
-    width: 100px;
+#le_th{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 4em;
+}
+
+#le_th>*{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: #A6E67B;
+    font-size: 1.2em;
+}
+
+#le_th>*>*{
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+#le_fo,#le_fi{
+    background-color: #b3f0a2;
+    height: 150px;
+    margin-top: 30px;
+}
+
+#le_si{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#le_si_1{
+    background-image: url("../public/设置_白.png");
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center center;
+
+    background-color: #A6E67B;
+    border-radius: 15px;
+    width: 60px;
+    height: 30px;
+}
+
+#le_si_2{
+    background-color: #A6E67B;
+    border-radius: 15px;
+    height: 30px;
+    padding-left: 2em;
+    padding-right: 2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 30px;
+
+    font-size: 1.2em;
+    color: white;
+}
+
+#mi{
+    background-color: rgba(255,255,255,0.43);
+    padding: 100px;
+    overflow: auto;
+}
+
+#mi_headline{
+    color: #A6E67B;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+/*#mi_cont_text{
+    color: #A6E67B;
+    font-size: 1.2em;
+    text-indent: 2em;
+}*/
+
+.mi_content>img{
+    width: 10%;
+    /*max-height: 400px;*/
+    margin-top: 30px;
+    object-fit:contain;
+    display: block;
+    margin: 0 auto;
+}
+
+#append_buttom{
+    background-color: #b3f0a2;
+    background-image: url("../public/图层 0.png");
+    background-size: 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 50px;
     height: 100px;
 }
 
-.butt{
-    width: 100px;
-    height: 100px;
-    background-color: #000;
+#ri{
+    background-color: rgba(255,255,255,0.43);
 }
 
-input{
-    background-color: aqua;
+#top1{
+    width: 100%;
+    height: 25em;
+    background-color: #b3f0a2;
+    resize: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 1em;
+}
+
+#ri_bu{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 30px;
+    height: 3em;
+    margin-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#pic_review{
+    width: 100%;
+    height: 400px;
+}
+
+#type_choice{
+    display: grid;
+    color: white;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 0.75em;
+    overflow: hidden;
+    
+}
+
+#type_choice>*{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add{
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75em;
+
+    font-size: 1.2em;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #A6E67B;
 }
 </style>

@@ -1,13 +1,104 @@
 <script setup>
-import { dividerProps } from 'element-plus';
+    import axios from 'axios';
+    import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
+    let apiUrl = 'http://localhost:5174';
+    let time_count = 0;
+    let condition = ref("login");
+
+    let yuka;
+
+    /*{
+    "email": "string",
+    "name": "string",
+    "school": "string",
+    "personal_sign": "string",
+    "description": "string",
+    "coin": 0,
+    "image": 0,
+    "image_show": false,
+    "archives_show": false,
+    "id": 0
+    } */
+
+    function verify()
+    {
+        if(time_count + 30 * 1000 > Date.now())
+        {
+            console.log("请等待" + Math.trunc((time_count + 30 * 1000 - Date.now()) / 1000) + "秒再发送验证码")
+        }
+        else
+        {
+            time_count = Date.now();
+            console.log(time_count)
+            let yuka_ele = document.getElementById("yuka");
+            yuka = yuka_ele.value;
+            axios.get(apiUrl + "/get_verification_code",{params: {email: yuka}})
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+    function rejister()
+    {
+        if(true)
+        {
+            condition.value = "rejister";
+        }
+    }
+
+    function sure_rejister()
+    {
+        /*let res = {params: {
+            "email": yuka,
+            "name": document.getElementById("name").value,
+            "school": document.getElementById("school").value,
+            "personal_sign": document.getElementById("personal_sign").value,
+            "description": "string",
+            "coin": 0,
+            "image": 0,
+            "image_show": false,
+            "archives_show": false,
+            "id": 0
+            }};*/
+        let res = {
+            "email": yuka,
+            "name": document.getElementById("name").value,
+            "school": document.getElementById("school").value,
+            "personal_sign": document.getElementById("personal_sign").value,
+            "description": "string",
+            "coin": 0,
+            "image": 0,
+            "image_show": false,
+            "archives_show": false,
+            "id": 0
+        };
+        console.log(res);
+        axios.post(apiUrl + "/register",res)
+            .then(function (response){
+                //console.log(response);
+            })
+            .catch(function (error){
+                console.log(error);
+            })
+    }
+
+    function login()
+    {
+        
+    }
 </script>
 
 <template>
     <div id="lo">
         <div id="lo_ui">
-            <div>
-                <div id="lo_ui_head">注册</div>
+            <div v-if="condition == 'login'">
+                <div id="lo_ui_head">登录</div>
 
                 <div id="lo_ui_input">
                     <div id="input_1">
@@ -16,17 +107,40 @@ import { dividerProps } from 'element-plus';
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="">
-                        <input type="text" name="" id="" style="margin-top: 1.5em;">
+                        <input type="text" name="" id="yuka">
+                        <input type="text" name="" id="password" style="margin-top: 1.5em;">
                     </div>
                 </div>
 
                 <div id="lo_ui_but">
-                    <div>验证</div>
-                    <div style="margin-left: 1.5em;">确认</div>
+                    <div @click="verify">验证</div>
+                    <div @click="rejister" style="margin-left: 1.5em;">注册</div>
+                    <div @click="login" style="margin-left: 1.5em;">登录</div>
                 </div>
             </div>
-        </div>
+
+            <div v-if="condition == 'rejister'">
+                <div id="lo_ui_head">完善个人信息</div>
+
+                <div id="lo_ui_input">
+                    <div id="input_1">
+                        <div>昵  称</div>
+                        <div style="margin-top: 1.5em;">学  校</div>
+                        <div style="margin-top: 1.5em;">个性签名</div>
+                    </div>
+                    <div id="input_2" style="height: 18em;"></div>
+                    <div id="input_3">
+                        <input type="text" name="" id="name">
+                        <input type="text" name="" id="school" style="margin-top: 1.5em;">
+                        <input type="text" name="" id="personal_sign" style="margin-top: 1.5em;">
+                    </div>
+                </div>
+
+                <div id="lo_ui_but">
+                    <div @click="sure_rejister">确认</div>
+                </div>
+            </div>
+        </div> 
 
         <div id="lo_ele">
             <div id="lo_ele_1">
