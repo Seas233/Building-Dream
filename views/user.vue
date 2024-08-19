@@ -32,24 +32,8 @@
         ip:"千年",
         personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
         school:"千年科技学院",
-        likes_sum:100,
-        follow:100,
-        fans:100,
     }
     let if_setting_open = ref(false);
-
-    const items = ref([
-    { id: 1, content: 'Item 1' },
-    { id: 2, content: 'Item 2' },
-    { id: 3, content: 'Item 3' },
-    { id: 4, content: 'Item 4' },
-    { id: 5, content: 'Item 5' },
-    { id: 6, content: 'Item 6' },
-    { id: 7, content: 'Item 7' },
-    { id: 8, content: 'Item 8' },
-    { id: 9, content: 'Item 9' },
-    { id: 10, content: 'Item 10' }
-    ])
 </script>
 
 <template>
@@ -66,8 +50,7 @@
 
                 <div style="margin-left: 5%;display: grid;">
                     <div id="name">{{ user["name"] }}</div>
-                    <div id="team">支教队伍:{{ user["team"] }}</div>
-                    <div id="ip">ip属地:{{ user["ip"] }}</div>
+                    <!--<div id="ip">ip属地:{{ user["ip"] }}</div>-->
                 </div>
             </div>
 
@@ -77,7 +60,7 @@
                 <div id="school">{{ user["school"] }}</div><div></div>
             </div>
 
-            <div id="le_th">
+            <!--<div id="le_th">
                 <div>
                     <div>{{ user["follow"] }}</div>
                     <p></p>
@@ -93,7 +76,7 @@
                     <div>{{ user["follow"] }}</div>
                     获赞
                 </div>
-            </div>
+            </div>-->
 
             <div id="le_fo"></div>
             <div id="le_fi"></div>
@@ -106,23 +89,23 @@
 
         <div id="mi">
             <div>
-                <div id="mi_head">个人灯塔</div>
+                <div id="mi_head">{{  }}支教档案</div>
                 <div id="mi_body">
-                    <!--<div v-for="item in items"></div>-->
-                    <div v-for="item in items" :key="item.id" :id="`item_${item.id}`">
-                        {{ item.content }}
-                    </div>
-                    <!--此处有待修改-->
+                    <!--这里塞支教档案-->
                 </div>
             </div>
-            <div id="mi_pic" @click="router.push('/create_article')"></div>
+            <div id="mi_pic" @click="router.push('/create_archive')"></div>
         </div>
+
+        <div></div>
 
         <div id="ri">
             <div id="ri_pic_bac"></div>
             <div id="ri_pic">
             </div>
         </div>
+
+        <div></div>
     </div>
 </template>
 
@@ -141,7 +124,7 @@
     width: 100%;
     position: relative;
     display: grid;
-    grid-template-columns: 10fr 21fr 10fr;
+    grid-template-columns: 10fr 21fr 30px 10fr 30px;
 }
 
 #lo>*{
@@ -213,26 +196,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#le_th{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    height: 4em;
-}
-
-#le_th>*{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    color: #A6E67B;
-    font-size: 1.2em;
-}
-
-#le_th>*>*{
-    font-size: 1.5em;
-    font-weight: 700;
 }
 
 #le_fo,#le_fi{

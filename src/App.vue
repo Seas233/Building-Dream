@@ -14,7 +14,7 @@ const router = useRouter()
         <div id="app_head_left">筑梦云窗</div>
          <div id="app_head_right">
             <div @click="router.push('/login')">首页</div>
-            <div @click="router.push('/video')">视频推荐</div>
+            <div @click="router.push('/archive_recommendation')">档案推荐</div>
             <div @click="router.push('/user/112')">个人主页</div>
             <div>联系我们</div>
             <div @click="router.push('/login')">登录</div>

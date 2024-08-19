@@ -35,15 +35,13 @@
         ip:"千年",
         personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
         school:"千年科技学院",
-        likes_sum:100,
-        follow:100,
-        fans:100,
     }
     let if_setting_open = ref(false);
-    let type = ref("text");
-    let ri_fun_on = ref(false);
+    let type = ref("title");
+    //let ri_fun_on = ref(false);
+    let ri_fun_on = ref(true);
 
-    let sum = reactive([
+    let sum = reactive([/*
         {
             type:"headline",
             content:"一棵树摇动另一棵树，一朵云推动另一朵云",
@@ -55,12 +53,27 @@
         {
             type:"text",
             content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
-        }
+        }*/
     ]);
 
     async function add_element()
     {
-        if(type.value == "text")
+        if(type.value == "title")
+        {
+            let inputElement = document.getElementById("top_title");
+            let add = {
+                type:"title",
+                content:inputElement.value,
+            };
+            if(add["content"] != "")
+            {
+                sum.push(add);
+            }
+            else{
+                console.log("这是空的诶。。。");
+            }
+        }
+        else if(type.value == "text")
         {
             let inputElement = document.getElementById("top1");
             let add = {
@@ -88,25 +101,57 @@
                 sum.push(add);
             }
         }
+        else if(type.value == "video")
+        {
+            let fileInput = document.getElementById('vid');
+            const file = fileInput.files[0];
+            if(file)
+            {
+                let add = {
+                    type:"video",
+                    file:file,
+                };
+                sum.push(add);
+            }
+        }
+        else if(type.value == "audio")
+        {
+            let fileInput = document.getElementById('aud');
+            const file = fileInput.files[0];
+            if(file)
+            {
+                let add = {
+                    type:"audio",
+                    file:file,
+                };
+                sum.push(add);
+            }
+        }
 
         ri_fun_on.value = false;
 
         const father = document.getElementById("mi_content");
-        const i = sum.length - 1;
+        let i = sum.length - 1;
+        if(type.value == "title")
+        {
+            i = 0;
+            let i_ele = document.createElement("div");
+            i_ele.innerHTML = sum[i]["content"];
+            i_ele.id = "mi_headline";
+            i_ele.style = "color: #6B944F;font-size: 2em;display: flex;justify-content: center;margin-bottom: 50px;"
+            father.appendChild(i_ele);
+            type.value = "text";
+        }
         if(sum[i]["type"] == "text")
         {
             let i_ele = document.createElement("div");
             i_ele.innerHTML = sum[sum.length - 1]["content"];
-
             //i_ele.classList.add("mi_cont_text");
-
-            i_ele.style = "color: #A6E67B;font-size: 1.2em;text-indent: 2em;"
-
+            i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
             if(sum[i - 1]["type"] != "text")
             {
                 i_ele.style.marginTop = "30px";
             }
-
             father.appendChild(i_ele);
         }
         else if(sum[i]["type"] == "pic")
@@ -117,6 +162,25 @@
             i_ele.width = 300;
             i_ele.className = "mi_cont_pic";
             i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
+            father.appendChild(i_ele);
+        }
+        else if(sum[i]["type"] == "video")
+        {
+            let i_ele = document.createElement("video");
+            i_ele.controls = true;
+            //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+            i_ele.src = URL.createObjectURL(sum[i]["file"]);
+            i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
+            father.appendChild(i_ele);
+        }
+        else if(sum[i]["type"] == "audio")
+        {
+            let i_ele = document.createElement("audio");
+            i_ele.controls = true;
+            //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+            i_ele.src = URL.createObjectURL(sum[i]["file"]);
+            i_ele.className = "mi_cont_pic";
+            i_ele.style = "width: 100%;margin-top: 30px;object-fit:contain;"
             father.appendChild(i_ele);
         }
     }
@@ -134,7 +198,6 @@
             };
             reader.readAsDataURL(file);
         }*/
-        
         preview.src = URL.createObjectURL(file);
     }
 
@@ -154,7 +217,7 @@
     }
 
     //初始加载
-    onMounted(() => {
+    /*onMounted(() => {
         const father = document.getElementById("mi_content");
         for(let i = 1;i < sum.length;i++)
         {
@@ -165,7 +228,7 @@
 
                 //i_ele.classList.add("mi_cont_text");
                 //i_ele.className = "mi_cont_text";
-                i_ele.style = "color: #A6E67B;font-size: 1.2em;text-indent: 2em;"
+                i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
 
                 father.appendChild(i_ele);
             }
@@ -178,7 +241,7 @@
                 father.appendChild(i_ele);
             }
         }
-    })
+    })*/
 </script>
 
 <template>
@@ -195,8 +258,6 @@
 
                 <div style="margin-left: 5%;display: grid;">
                     <div id="name">{{ user["name"] }}</div>
-                    <div id="team">支教队伍:{{ user["team"] }}</div>
-                    <div id="ip">ip属地:{{ user["ip"] }}</div>
                 </div>
             </div>
 
@@ -204,24 +265,6 @@
 
             <div style="display: flex;">
                 <div id="school">{{ user["school"] }}</div><div></div>
-            </div>
-
-            <div id="le_th">
-                <div>
-                    <div>{{ user["follow"] }}</div>
-                    <p></p>
-                    关注
-                </div>
-
-                <div>
-                    <div>{{ user["fans"] }}</div>
-                    粉丝
-                </div>
-
-                <div>
-                    <div>{{ user["follow"] }}</div>
-                    获赞
-                </div>
             </div>
 
             <div id="le_fo"></div>
@@ -235,9 +278,13 @@
 
         <div id="mi">
             <div id="mi_content">
-                <div id="mi_headline">{{ sum[0]["content"] }}</div>
+                <!--<div id="mi_headline">{{ sum[0]["content"] }}</div>-->
             </div>
-            <div id="append_buttom" @click="ri_fun_on = true"></div>
+
+            <div class="mi_1">
+                <div id="send_buttom" @click="send_paper"></div>
+                <div id="append_buttom" @click="ri_fun_on = true"></div>
+            </div>
         </div>
 
         <div></div>
@@ -245,13 +292,18 @@
         <div id="ri">
             <div id="ri_fun" v-if="ri_fun_on">
                 <div id="ri_bu">
-                    <div id="type_choice">
+                    <div id="type_choice" v-if="type != 'title'">
                         <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'text'">文字</div>
                         <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'pic'">图片</div>
-                        <div id="type_aideo" :style="{ 'background-color' : type == 'aideo' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'aideo'">音频</div>
+                        <div id="type_aideo" :style="{ 'background-color' : type == 'audio' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'audio'">音频</div>
                         <div id="type_video" :style="{ 'background-color' : type == 'video' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'video'">视频</div>
                     </div>
+                    <div id="type_title" v-if="type == 'title'">标   题</div>
+
                     <div id="add" @click="add_element">添加</div>
+                </div>
+                <div v-if="type == 'title'" style="padding: 30px;">
+                    <textarea id="top_title"></textarea>
                 </div>
 
                 <div v-if="type == 'text'" style="padding: 30px;">
@@ -264,11 +316,11 @@
                 </div>
 
                 <div v-if="type == 'video'">
-                    <input type="file" accept="video/*" @change="load_video">
+                    <input type="file" accept="video/*" id="vid">
                 </div>
 
                 <div v-if="type == 'audio'">
-                    <input type="file" accept="audio/*" @change="load_audio">
+                    <input type="file" accept="audio/*" id="aud">
                 </div>
             </div>
         </div>
@@ -368,26 +420,6 @@
     justify-content: center;
 }
 
-#le_th{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    height: 4em;
-}
-
-#le_th>*{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    color: #A6E67B;
-    font-size: 1.2em;
-}
-
-#le_th>*>*{
-    font-size: 1.5em;
-    font-weight: 700;
-}
-
 #le_fo,#le_fi{
     background-color: #b3f0a2;
     height: 150px;
@@ -437,7 +469,7 @@
 }
 
 #mi_headline{
-    color: #A6E67B;
+    color: #6B944F;
     font-size: 2em;
     display: flex;
     justify-content: center;
@@ -448,25 +480,44 @@
     color: #A6E67B;
     font-size: 1.2em;
     text-indent: 2em;
-}*/
+}
 
 .mi_content>img{
     width: 10%;
-    /*max-height: 400px;*/
     margin-top: 30px;
     object-fit:contain;
     display: block;
     margin: 0 auto;
+}*/
+
+.mi_1{
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 #append_buttom{
     background-color: #b3f0a2;
     background-image: url("../public/图层 0.png");
-    background-size: 80px;
+    background-size: 60px;
     background-position: center center;
     background-repeat: no-repeat;
-    margin-top: 50px;
+    margin-top: 30px;
     height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+#send_buttom{
+    background-color: #6B944F;
+    background-image: url("../public/图层 0.png");
+    background-size: 60px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+    margin-left: 30px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
 }
 
 #ri{
@@ -476,6 +527,16 @@
 #top1{
     width: 100%;
     height: 25em;
+    background-color: #b3f0a2;
+    resize: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 1em;
+}
+
+#top_title{
+    width: 100%;
+    height: 5em;
     background-color: #b3f0a2;
     resize: none;
     color: white;
@@ -504,7 +565,16 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     border-radius: 0.75em;
     overflow: hidden;
-    
+}
+
+#type_title{
+    background-color: #A6E67B;
+    border-radius: 0.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2em;
 }
 
 #type_choice>*{
@@ -513,12 +583,15 @@
     align-items: center;
 }
 
+#aud,#vid{
+    padding: 30px;
+}
+
 #add{
     width: 100%;
     height: 100%;
     border-radius: 0.75em;
 
-    font-size: 1.2em;
     color: white;
 
     display: flex;
