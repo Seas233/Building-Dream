@@ -11,19 +11,6 @@
 
     let router = useRouter();
 
-    /*{
-    "email": "string",
-    "name": "string",
-    "school": "string",
-    "personal_sign": "string",
-    "description": "string",
-    "coin": 0,
-    "image": 0,
-    "image_show": false,
-    "archives_show": false,
-    "id": 0
-    } */
-
     async function verify()
     {
         if(time_count + 30 * 1000 > Date.now())
@@ -164,7 +151,7 @@
 #lo{
     width: 100%;
     height: 100vh;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -275,7 +262,7 @@
     margin-left: 100px;
     margin-bottom: 20px;
     height: 80%;
-    background-image: url("../public/login_bac_white_pep.png");
+    background-image: url("/login_bac_white_pep.png");
     background-size: contain;
     background-repeat: no-repeat;
     display: flex;
@@ -284,7 +271,7 @@
 
 #lo_ele_2{
     height: 50%;
-    background-image: url("../public/login_bac_green_pep.png");
+    background-image: url("/login_bac_green_pep.png");
     background-size: contain;
     background-repeat: no-repeat;
 }

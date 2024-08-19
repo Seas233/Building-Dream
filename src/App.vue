@@ -23,7 +23,6 @@ const router = useRouter()
 
     <router-view></router-view>
 
-
    <div id="app_buttom">
     <!--
        <div>关注我们</div>
@@ -49,10 +48,6 @@ const router = useRouter()
            </div>
        </div>-->
    </div>
-
-    
-
-
 </template>
 
 <style scoped>

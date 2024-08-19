@@ -112,7 +112,7 @@
 <style scoped>
 #bac{
     position: fixed;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     width: 100vw;
     height: 100vw;
     background-repeat:no-repeat;
@@ -144,7 +144,7 @@
 }
 
 #profile_picture{
-    background-image: url("../public/头像.png");
+    background-image: url("/头像.png");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -157,7 +157,7 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("../public/更改头像.png");
+    background-image: url("/更改头像.png");
     background-size: cover;
 }
 
@@ -212,7 +212,7 @@
 }
 
 #le_si_1{
-    background-image: url("../public/设置_白.png");
+    background-image: url("/设置_白.png");
     background-repeat: no-repeat;
     background-size: 24px 24px;
     background-position: center center;
@@ -280,7 +280,7 @@
     width: 100px;
     height: 100px;
 
-    background-image: url("../public/light_on.png");
+    background-image: url("/light_on.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top;
@@ -292,7 +292,7 @@
     left: 0px;
     z-index: 10;
 
-    background-image: url("../public/女1Q.png");
+    background-image: url("/女1Q.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom right;
@@ -312,7 +312,7 @@
 }
 
 #ri_pic_bac{
-    background-image: url("../public/人物背景.png");
+    background-image: url("/人物背景.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -326,7 +326,7 @@
 }
 
 #ri_pic{
-    background-image: url("../public/女1成.png");
+    background-image: url("/女1成.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;

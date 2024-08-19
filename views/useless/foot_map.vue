@@ -34,7 +34,7 @@ let if_setting_open = ref(false);
 #map_1_1{
     width: 70%;
     height: 60vw;
-    background-image: url("../public/cn_map.png");
+    background-image: url("/cn_map.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -45,7 +45,7 @@ let if_setting_open = ref(false);
     width: 30px;
     height: 60px;
     position: absolute;
-    background-image: url("../public/地点.png");
+    background-image: url("/地点.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -54,7 +54,7 @@ let if_setting_open = ref(false);
 #map_1_2{
     width: 15%;
     height: 40vw;
-    background-image: url("../public/女1Q.png");
+    background-image: url("/女1Q.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;

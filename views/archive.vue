@@ -8,6 +8,7 @@
 
     const router = useRouter();
 
+    //维持头像图片正方形
     onMounted(() => {
         let pic = document.getElementById("profile_picture")
         pic.style.height = pic.offsetWidth + "px";
@@ -29,6 +30,9 @@
     windowHeight.value = window.innerHeight
     });
 
+    
+    let if_setting_open = ref(false);
+    //用户资料和页面内容测试，应该从后端接受。。。
     let user = {
         name:"爱丽丝",
         team:7355608,
@@ -36,8 +40,6 @@
         personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
         school:"千年科技学院",
     }
-    
-    let if_setting_open = ref(false);
 
     let sum = reactive([
         {
@@ -53,41 +55,39 @@
             content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
         }
     ]);
+    
+    const mi_content = ref(null);
 
     //初始加载
     onMounted(() => {
-        const father = document.getElementById("mi_content");
         for(let i = 0;i < sum.length;i++)
         {
             if(sum[i]["type"] == "title")
             {
-                let i_ele = document.createElement("div");
-                i_ele.innerHTML = sum[i]["content"];
-                i_ele.id = "mi_headline";
-                i_ele.style = "color: #6B944F;font-size: 2em;display: flex;justify-content: center;margin-bottom: 50px;"
-                father.appendChild(i_ele);
+                const i_ele = document.createElement("div");
+                i_ele.textContent = sum[0]["content"];
+                i_ele.className = "ar__mi_headline";
+                mi_content.value.appendChild(i_ele);
             }
             if(sum[i]["type"] == "text")
             {
                 let i_ele = document.createElement("div");
-                i_ele.innerHTML = sum[sum.length - 1]["content"];
-                //i_ele.classList.add("mi_cont_text");
-                i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
+                i_ele.className = "ar__mi_cont_text";
+                i_ele.textContent = sum[sum.length - 1]["content"];
                 if(sum[i - 1]["type"] != "text")
                 {
                     i_ele.style.marginTop = "30px";
                 }
-                father.appendChild(i_ele);
+                mi_content.value.appendChild(i_ele);
             }
             else if(sum[i]["type"] == "pic")
             {
                 let i_ele = document.createElement("img");
                 //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
                 i_ele.src = URL.createObjectURL(sum[i]["file"]);
-                i_ele.width = 300;
-                i_ele.className = "mi_cont_pic";
-                i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
-                father.appendChild(i_ele);
+                i_ele.width = "100%";
+                i_ele.className = "ar__mi_cont_pic";
+                mi_content.value.appendChild(i_ele);
             }
             else if(sum[i]["type"] == "video")
             {
@@ -95,8 +95,8 @@
                 i_ele.controls = true;
                 //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
                 i_ele.src = URL.createObjectURL(sum[i]["file"]);
-                i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
-                father.appendChild(i_ele);
+                i_ele.className = "ar__mi_cont_vid";
+                mi_content.value.appendChild(i_ele);
             }
             else if(sum[i]["type"] == "audio")
             {
@@ -104,9 +104,8 @@
                 i_ele.controls = true;
                 //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
                 i_ele.src = URL.createObjectURL(sum[i]["file"]);
-                i_ele.className = "mi_cont_pic";
-                i_ele.style = "width: 100%;margin-top: 30px;object-fit:contain;"
-                father.appendChild(i_ele);
+                i_ele.className = "ar__mi_cont_aud";
+                mi_content.value.appendChild(i_ele);
             }
         }
     })
@@ -145,7 +144,7 @@
         </div>
 
         <div id="mi">
-            <div id="mi_content">
+            <div id="mi_content" ref="mi_content">
                 <!--<div id="mi_headline">{{ sum[0]["content"] }}</div>-->
             </div>
         </div>
@@ -153,40 +152,6 @@
         <div></div>
 
         <div id="ri">
-            <!--
-            <div id="ri_fun" v-if="ri_fun_on">
-                <div id="ri_bu">
-                    <div id="type_choice" v-if="type != 'title'">
-                        <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'text'">文字</div>
-                        <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'pic'">图片</div>
-                        <div id="type_aideo" :style="{ 'background-color' : type == 'audio' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'audio'">音频</div>
-                        <div id="type_video" :style="{ 'background-color' : type == 'video' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'video'">视频</div>
-                    </div>
-                    <div id="type_title" v-if="type == 'title'">标   题</div>
-
-                    <div id="add" @click="add_element">添加</div>
-                </div>
-                <div v-if="type == 'title'" style="padding: 30px;">
-                    <textarea id="top_title"></textarea>
-                </div>
-
-                <div v-if="type == 'text'" style="padding: 30px;">
-                    <textarea id="top1"></textarea>
-                </div>
-
-                <div v-if="type == 'pic'" style="padding: 30px;">
-                    <input type="file" accept="image/*" @change="load_pic" id="pic">
-                    <img id="pic_preview" alt="" width="100%">
-                </div>
-
-                <div v-if="type == 'video'">
-                    <input type="file" accept="video/*" id="vid">
-                </div>
-
-                <div v-if="type == 'audio'">
-                    <input type="file" accept="audio/*" id="aud">
-                </div>
-            </div>-->
         </div>
         
         <div></div>
@@ -196,7 +161,7 @@
 <style scoped>
 #bac{
     position: fixed;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     width: 100vw;
     height: 100vw;
     background-repeat:no-repeat;
@@ -230,7 +195,7 @@
 }
 
 #profile_picture{
-    background-image: url("../public/头像.png");
+    background-image: url("/头像.png");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -243,7 +208,7 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("../public/更改头像.png");
+    background-image: url("/更改头像.png");
     background-size: cover;
 }
 
@@ -298,7 +263,7 @@
 }
 
 #le_si_1{
-    background-image: url("../public/设置_白.png");
+    background-image: url("/设置_白.png");
     background-repeat: no-repeat;
     background-size: 24px 24px;
     background-position: center center;
@@ -332,14 +297,6 @@
     overflow: auto;
 }
 
-#mi_headline{
-    color: #6B944F;
-    font-size: 2em;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
-}
-
 .mi_1{
     display: flex;
     flex-direction: row-reverse;
@@ -347,7 +304,7 @@
 
 #append_buttom{
     background-color: #b3f0a2;
-    background-image: url("../public/图层 0.png");
+    background-image: url("/图层 0.png");
     background-size: 60px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -359,7 +316,7 @@
 
 #send_buttom{
     background-color: #6B944F;
-    background-image: url("../public/图层 0.png");
+    background-image: url("/图层 0.png");
     background-size: 60px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -449,5 +406,43 @@
     justify-content: center;
 
     background-color: #A6E67B;
+}
+</style>
+
+<style>
+.ar__mi_headline{
+    color: #6B944F;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.ar__mi_cont_text{
+    color: #6B944F;
+    font-size: 1.2em;
+    text-indent: 2em;
+    line-height: 1.5em;
+    letter-spacing: 1px;
+}
+
+.ar__mi_cont_pic{
+    width: 100%;
+    height: 400px;
+    margin-top: 30px;
+    object-fit: contain;
+}
+
+.ar__mi_cont_vid{
+    width: 100%;
+    height: 400px;
+    margin-top: 30px;
+    object-fit: contain;
+}
+
+.ar__mi_cont_aud{
+    width: 100%;
+    margin-top: 30px;
+    object-fit:contain;
 }
 </style>

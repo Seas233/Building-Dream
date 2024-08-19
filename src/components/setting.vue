@@ -144,7 +144,7 @@ let language = ref(1)
 }
 
 #a_3_1{
-    background-image: url("../../public/设置_2.png");
+    background-image: url("/设置_2.png");
     height: 40px;
     width: 40px;
     background-size: contain;

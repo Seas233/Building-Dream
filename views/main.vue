@@ -19,7 +19,7 @@
 
     width: 100%;
     height: 100vh;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -30,7 +30,7 @@
     height: 80%;
     width: 100%;
     position: absolute;
-    background-image: url("../public/login_bac_white_pep.png");
+    background-image: url("/login_bac_white_pep.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -41,7 +41,7 @@
     height: 40%;
     width: 100%;
     position: absolute;
-    background-image: url("../public/login_bac_green_pep.png");
+    background-image: url("/login_bac_green_pep.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

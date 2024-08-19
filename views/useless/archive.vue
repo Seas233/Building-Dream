@@ -79,7 +79,7 @@ let archive_number=ref(1)
 }
 
 #per_2_1{
-    background-image: url("../public/underline_1.png");
+    background-image: url("/underline_1.png");
     background-size: contain;
     width: 154.63px;
     height: 40px;
@@ -96,7 +96,7 @@ let archive_number=ref(1)
 }
 
 #head_ri_1{
-    background-image: url("../public/设置.png");
+    background-image: url("/设置.png");
     height: 60px;
     width: 60px;
     background-size: contain;
@@ -121,7 +121,7 @@ let archive_number=ref(1)
     height: 50px;
     width: 50px;
     margin-left: 10px;
-    background-image: url("../public/钱币.png");
+    background-image: url("/钱币.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100px;

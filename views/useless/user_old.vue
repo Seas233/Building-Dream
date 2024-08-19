@@ -133,7 +133,7 @@
 #per_3_2>*{
     height: 80%;
     width: 100%;
-    background-image: url("../public/女1成.png");
+    background-image: url("/女1成.png");
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
@@ -155,7 +155,7 @@
 }
 
 #per_3_3_2{ 
-    background-image: url("../public/坐标\ 1.png");
+    background-image: url("/坐标\ 1.png");
     background-size: contain;
     background-repeat: no-repeat;
     width: 50px;
