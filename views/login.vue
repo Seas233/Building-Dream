@@ -9,6 +9,8 @@
 
     let yuka;
 
+    let router = useRouter();
+
     /*{
     "email": "string",
     "name": "string",
@@ -22,7 +24,7 @@
     "id": 0
     } */
 
-    function verify()
+    async function verify()
     {
         if(time_count + 30 * 1000 > Date.now())
         {
@@ -31,10 +33,11 @@
         else
         {
             time_count = Date.now();
-            console.log(time_count)
             let yuka_ele = document.getElementById("yuka");
             yuka = yuka_ele.value;
-            axios.get(apiUrl + "/get_verification_code",{params: {email: yuka}})
+            /*{params: {"email": yuka}}*/
+            console.log(apiUrl + "/user/login-signup/send-email")
+            axios.post(apiUrl + "/user/login-signup/send-email",)
                 .then(function (response) {
                     console.log(response);
                 })
@@ -90,7 +93,14 @@
 
     function login()
     {
-        
+        axios.post(apiUrl + "/",)
+            .then(function (response){
+                //console.log(response);
+                router.push('/user/' + response)
+            })
+            .catch(function (error){
+                console.log(error);
+            })
     }
 </script>
 

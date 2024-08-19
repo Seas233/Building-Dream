@@ -1,275 +1,453 @@
 <script setup>
-import {ref} from "vue";
-import { useRouter } from 'vue-router';
+    import axios from 'axios';
+    import { onMounted,ref, watch,reactive } from 'vue';
+    import setting from "../src/components/setting.vue";
+    import { useRouter } from 'vue-router';
 
-import setting from "../src/components/setting.vue";
-import headline from "../src/components/headline.vue";
+    let apiUrl = 'http://localhost:5174';
 
-const router = useRouter()
+    const router = useRouter();
 
-let if_setting_open = ref(false);
+    onMounted(() => {
+        let pic = document.getElementById("profile_picture")
+        pic.style.height = pic.offsetWidth + "px";
+    })
 
-let archive_number=ref(1)
+    const windowWidth = ref(window.innerWidth);
+    const windowHeight = ref(window.innerHeight);
+
+    watch(
+    () => [windowWidth.value, windowHeight.value],
+    () => {
+        let pic = document.getElementById("profile_picture")
+        pic.style.height = pic.offsetWidth + "px";
+    }
+    );
+
+    window.addEventListener('resize', () => {
+    windowWidth.value = window.innerWidth
+    windowHeight.value = window.innerHeight
+    });
+
+    let user = {
+        name:"爱丽丝",
+        team:7355608,
+        ip:"千年",
+        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+        school:"千年科技学院",
+    }
+    
+    let if_setting_open = ref(false);
+
+    let sum = reactive([
+        {
+            type:"title",
+            content:"一棵树摇动另一棵树，一朵云推动另一朵云",
+        },
+        {
+            type:"text",
+            content:"他们渴望走出大山，我们选择远赴千里;他们喜欢仰望星空，我们善于点亮希望;他们畅想诗和远方，我们播下种子，让未来不在苟且。"
+        },
+        {
+            type:"text",
+            content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
+        }
+    ]);
+
+    //初始加载
+    onMounted(() => {
+        const father = document.getElementById("mi_content");
+        for(let i = 0;i < sum.length;i++)
+        {
+            if(sum[i]["type"] == "title")
+            {
+                let i_ele = document.createElement("div");
+                i_ele.innerHTML = sum[i]["content"];
+                i_ele.id = "mi_headline";
+                i_ele.style = "color: #6B944F;font-size: 2em;display: flex;justify-content: center;margin-bottom: 50px;"
+                father.appendChild(i_ele);
+            }
+            if(sum[i]["type"] == "text")
+            {
+                let i_ele = document.createElement("div");
+                i_ele.innerHTML = sum[sum.length - 1]["content"];
+                //i_ele.classList.add("mi_cont_text");
+                i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
+                if(sum[i - 1]["type"] != "text")
+                {
+                    i_ele.style.marginTop = "30px";
+                }
+                father.appendChild(i_ele);
+            }
+            else if(sum[i]["type"] == "pic")
+            {
+                let i_ele = document.createElement("img");
+                //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+                i_ele.src = URL.createObjectURL(sum[i]["file"]);
+                i_ele.width = 300;
+                i_ele.className = "mi_cont_pic";
+                i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
+                father.appendChild(i_ele);
+            }
+            else if(sum[i]["type"] == "video")
+            {
+                let i_ele = document.createElement("video");
+                i_ele.controls = true;
+                //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+                i_ele.src = URL.createObjectURL(sum[i]["file"]);
+                i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
+                father.appendChild(i_ele);
+            }
+            else if(sum[i]["type"] == "audio")
+            {
+                let i_ele = document.createElement("audio");
+                i_ele.controls = true;
+                //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+                i_ele.src = URL.createObjectURL(sum[i]["file"]);
+                i_ele.className = "mi_cont_pic";
+                i_ele.style = "width: 100%;margin-top: 30px;object-fit:contain;"
+                father.appendChild(i_ele);
+            }
+        }
+    })
 </script>
 
 <template>
-    <div style="height: 70px;"></div>
-    
     <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
-    
-    <headline title="个人档案室"/>
 
-    <div style="height: 100px;"></div>
+    <div id="bac"></div>
 
-    <div id="per_3">
-        <div id="per_3_1">
-            <div id="per_3_1_number_1" class="per_3_1_number">1</div>
-            <div id="per_3_1_number_2" class="per_3_1_number">2</div>
-            <div id="per_3_1_number_3" class="per_3_1_number">3</div>
-            <div id="per_3_1_number_4" class="per_3_1_number">4</div>
-            <div id="per_3_1_switch">点击切换其他档案室</div>
-        </div>
-        <div id="per_3_2">
-            <div id="per_3_2_back"></div>
-            <div id="per_3_2_back_number">{{ archive_number }}</div>
-            <div id="per_3_2_container">
-                <div id="per_3_2_file" @click="router.push('/article')">
-                    <div>
-                        <span>书中自有黄金屋</span>
-                    </div>
+    <div id="lo">
+        <div id="le">
+            <div id="le_top">
+                <div id="profile_picture">
+                    <div id="change_pic"></div>
                 </div>
-                <div id="per_3_2_file">
-                    <div>
-                        <span>书中自有黄金屋</span>
-                    </div>
-                </div>
-                <div id="per_3_2_file">
-                    <div>
-                        <span>书中自有黄金屋</span>
-                    </div>
+
+                <div style="margin-left: 5%;display: grid;">
+                    <div id="name">{{ user["name"] }}</div>
                 </div>
             </div>
 
-        </div>
-    </div>
+            <div id="le_sec">个性签名：{{ user["personal_sign"] }}</div>
 
+            <div style="display: flex;">
+                <div id="school">{{ user["school"] }}</div><div></div>
+            </div>
+
+            <div id="le_fo"></div>
+            <div id="le_fi"></div>
+
+            <!--<div id="le_si">
+                <div id="le_si_2">修改资料</div>
+                <div id="le_si_1" @click="if_setting_open = true;"></div>
+            </div>-->
+        </div>
+
+        <div id="mi">
+            <div id="mi_content">
+                <!--<div id="mi_headline">{{ sum[0]["content"] }}</div>-->
+            </div>
+        </div>
+
+        <div></div>
+
+        <div id="ri">
+            <!--
+            <div id="ri_fun" v-if="ri_fun_on">
+                <div id="ri_bu">
+                    <div id="type_choice" v-if="type != 'title'">
+                        <div id="type_text" :style="{ 'background-color' : type == 'text' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'text'">文字</div>
+                        <div id="type_pic" :style="{ 'background-color' : type == 'pic' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'pic'">图片</div>
+                        <div id="type_aideo" :style="{ 'background-color' : type == 'audio' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'audio'">音频</div>
+                        <div id="type_video" :style="{ 'background-color' : type == 'video' ? '#A6E67B' : '#b3f0a2'}" @click="type = 'video'">视频</div>
+                    </div>
+                    <div id="type_title" v-if="type == 'title'">标   题</div>
+
+                    <div id="add" @click="add_element">添加</div>
+                </div>
+                <div v-if="type == 'title'" style="padding: 30px;">
+                    <textarea id="top_title"></textarea>
+                </div>
+
+                <div v-if="type == 'text'" style="padding: 30px;">
+                    <textarea id="top1"></textarea>
+                </div>
+
+                <div v-if="type == 'pic'" style="padding: 30px;">
+                    <input type="file" accept="image/*" @change="load_pic" id="pic">
+                    <img id="pic_preview" alt="" width="100%">
+                </div>
+
+                <div v-if="type == 'video'">
+                    <input type="file" accept="video/*" id="vid">
+                </div>
+
+                <div v-if="type == 'audio'">
+                    <input type="file" accept="audio/*" id="aud">
+                </div>
+            </div>-->
+        </div>
+        
+        <div></div>
+    </div>
 </template>
 
 <style scoped>
-#head{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 70px;
-    align-items: center;
-}
-
-#per_2{
-    width: 100%;
-    color: rgba(130, 213, 38, 1);
-    /*font-family: Inter;*/
-    font-size: 60px;
-    font-weight: 600;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    overflow: visible;
-}
-
-#per_2_1{
-    background-image: url("../public/underline_1.png");
-    background-size: contain;
-    width: 154.63px;
-    height: 40px;
-    position: absolute;
-    top: 45px;
-    z-index: 100;
-}
-
-#head_ri{
+#bac{
+    position: fixed;
+    background-image: url("../public/login_bac.png");
     width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    height: 100vw;
+    background-repeat:no-repeat;
+    background-size:cover;
+    z-index: -10;
 }
 
-#head_ri_1{
-    background-image: url("../public/设置.png");
-    height: 60px;
-    width: 60px;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    margin-right: 60px;
-    margin-left: 60px;
+#lo{
+    width: 100%;
     position: relative;
-    z-index: 100;
-}
 
-#head_ri_2{
-    height: 60px;
-    width: 300px;
-    border-radius: 30px;
-    background-color: rgba(213, 239, 128, 1);
-    display: flex;
-    align-items: center;
-}
-
-#head_ri_2_1{
-    height: 50px;
-    width: 50px;
-    margin-left: 10px;
-    background-image: url("../public/钱币.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 100px;
-    overflow: hidden;
-    margin-right: 10px;
-}
-
-#head_ri_2_2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    /*font-family: Inter;*/
-    font-size: 45px;
-    font-weight: 600;
-    line-height: 60px;
-}
-
-#per_3{
-    width: 100vw;
-    height: 100vh;
     display: grid;
-    grid-template-columns: 15% 85% ;
+    grid-template-columns: 10fr 21fr 30px 10fr 30px;
+
+    padding-top: 120px;
 }
 
-#per_3_1{
+#lo>*{
     width: 100%;
     height: 100%;
-    background-color: rgba(213, 239, 128, 1);
-    border-radius: 0 2vw 2vw 0;
-    position: relative;
 }
 
-.per_3_1_number{
-    width: 5vw;
-    height: 8vh;
-    left: 2vw;
-    position: absolute;
-    background-color: #FFFFFF;
-    border-radius: 4vw;
-    color: #82D526;
-    text-align: center;
-    font-size: 6vh;
-    line-height: 8vh;
-    font-weight: 500;
+#le{
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-#per_3_1_number_1{
-    top: 20vh;
-}
-#per_3_1_number_2{
-    top: 34vh;
-}
-#per_3_1_number_3{
-    top: 48vh;
-}
-#per_3_1_number_4{
-    top: 62vh;
+#le_top{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
 }
 
-
-#per_3_1_switch{
-    position: absolute;
-    top: 50vh;
-    right: 1vw;
-    color: #FFFFFF;
-    width: 1.3vw;
-    height: 28vh;
-    font-family: Inter;
-    font-size: 3vh;
-    font-weight: 600;
-    line-height: 4vh;
-    text-align: center;
-
-}
-
-
-#per_3_2{
-    position: relative;
-}
-
-
-#per_3_2_container{
-    width: 85vw;
-    height: 54vh;
-    margin-right: 1vw;
-    display: flex;
-    position: absolute;
-    top:18%;
-}
-
-#per_3_2_file{
-    width: 18vw;
-    height: 54vh;
-    margin: 0 4vw;
-    background: url('/public/video recommendation/p2.jpg');
+#profile_picture{
+    background-image: url("../public/头像.png");
     background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 2vw;
+    border-radius: 50%; 
+    border: 3px solid white;
+    position: relative;
 }
 
-#per_3_2_file>div{
-    width: inherit;
+#change_pic{
+    width: 30%;
     height: 30%;
-    background-image: linear-gradient(rgba(81, 154, 210,0),#483D2F);
-    /*background: linear-gradient(0.13deg, #005FAE 0.07%, rgba(0, 95, 174, 0.64) 55.64%, rgba(0, 95, 174, 0) 91.64%);*/
     position: absolute;
-    bottom: 0;
-    border-radius: 2vw;
+    right: 0px;
+    bottom: 0px;
+    background-image: url("../public/更改头像.png");
+    background-size: cover;
 }
 
-#per_3_2_file>div>span{
+#name{
+    color: #A6E67B;
+    font-size: 2em;
+    font-weight:900;
+}
+
+#team,#ip,#le_sec{
+    color: #A6E67B;
+    margin-top: 0.4em;
+    font-size: 1.5em;
+}
+
+#name,#team,#ip{
+    align-content: center;
+}
+
+#le_sec{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#school{
+    background-color: #A6E67B;
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 30px;
+
+    height: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 1em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#le_fo,#le_fi{
+    background-color: #b3f0a2;
+    height: 150px;
+    margin-top: 30px;
+}
+
+#le_si{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#le_si_1{
+    background-image: url("../public/设置_白.png");
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center center;
+
+    background-color: #A6E67B;
+    border-radius: 15px;
+    width: 60px;
+    height: 30px;
+}
+
+#le_si_2{
+    background-color: #A6E67B;
+    border-radius: 15px;
+    height: 30px;
+    padding-left: 2em;
+    padding-right: 2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 30px;
+
+    font-size: 1.2em;
+    color: white;
+}
+
+#mi{
+    background-color: rgba(255,255,255,0.43);
+    padding: 100px;
+    overflow: auto;
+}
+
+#mi_headline{
+    color: #6B944F;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.mi_1{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#append_buttom{
+    background-color: #b3f0a2;
+    background-image: url("../public/图层 0.png");
+    background-size: 60px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+#send_buttom{
+    background-color: #6B944F;
+    background-image: url("../public/图层 0.png");
+    background-size: 60px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+    margin-left: 30px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+#ri{
+    background-color: rgba(255,255,255,0.43);
+}
+
+#top1{
     width: 100%;
-    height: 2vh;
-    font-family: Inter;
-    font-size: 3vh;
-    font-weight: 700;
-    line-height: 3vh;
-    text-align: left;
-    color:#FFFFFF;
-    position: absolute;
-    bottom: 5vh;
-    left: 2vw;
-;
-
+    height: 25em;
+    background-color: #b3f0a2;
+    resize: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 1em;
 }
 
-#per_3_2_back{
+#top_title{
     width: 100%;
-    height: 52%;
-    margin: 12% 0;
-    background-color: rgba(213, 239, 128, 1) ;
-    z-index: -2;
-    position: absolute;
-    top:10%
+    height: 5em;
+    background-color: #b3f0a2;
+    resize: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 1em;
 }
 
-#per_3_2_back_number{
-    color: #FFFFFF;
-    font-family: Inter;
-    font-size: 12vh;
-    font-style: italic;
-    font-weight: 900;
-    line-height: 12vh;
-    text-align: left;
-    position: absolute;
-    right: 2vw;
-    top: 68vh;
+#ri_bu{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 30px;
+    height: 3em;
+    margin-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
+#pic_review{
+    width: 100%;
+    height: 400px;
+}
+
+#type_choice{
+    display: grid;
+    color: white;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 0.75em;
+    overflow: hidden;
+}
+
+#type_title{
+    background-color: #A6E67B;
+    border-radius: 0.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2em;
+}
+
+#type_choice>*{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#aud,#vid{
+    padding: 30px;
+}
+
+#add{
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75em;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #A6E67B;
+}
 </style>

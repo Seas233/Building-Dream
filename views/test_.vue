@@ -7,10 +7,10 @@
 
         fileInput.addEventListener('change',function(event){
             const file = event.target.files[0];
+            console.log("读进去了！")
             if(file){
                 const reader = new FileReader();
                 reader.onload = function(e){
-                    console.log(e.target.result)
                     preview.src = e.target.result;
                     preview.style.display = 'block';
                 };
@@ -23,11 +23,12 @@
 <template>
     <div style="height: 70px;"></div>
 
-    <h2>上传图片并预览</h2>
+    <h2>上传视频并预览</h2>
     
-    <input type="file" id="a_in_test" accept="image/">
+    <input type="file" id="a_in_test" accept="video/">
     <br><br>
-    <img id="b_in_test" src="" alt="图片预览"style="max-width:300px;max-height:300px;display:none;">
+    <video id='b_in_test' src="" style="max-width: 1000px;max-height: 1000px" controls>
+    </video>
 
 </template>
 
