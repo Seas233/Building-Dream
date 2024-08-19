@@ -104,7 +104,7 @@
 }
 
 #video_2_1{
-    background-image: url("../public/underline_1.png");
+    background-image: url("/underline_1.png");
     background-size: contain;
     width: 154.63px;
     height: 40px;
@@ -136,7 +136,7 @@
 }
 
 #video_3_1_1{
-    background-image: url("../public/video recommendation/p1.jpg");
+    background-image: url("/video recommendation/p1.jpg");
 }
 
 #video_3_1_1>*{
@@ -144,7 +144,7 @@
 }
 
 #video_3_1_2{
-    background-image: url("../public/video recommendation/p2.jpg");
+    background-image: url("/video recommendation/p2.jpg");
 }
 
 #video_3_1_2>*{
@@ -152,7 +152,7 @@
 }
 
 #video_3_1_3{
-    background-image: url("../public/video recommendation/p3.jpg");
+    background-image: url("/video recommendation/p3.jpg");
 }
 
 #video_3_1_3>*{
@@ -160,7 +160,7 @@
 }
 
 #video_3_1_4{
-    background-image: url("../public/video recommendation/p4.jpg");
+    background-image: url("/video recommendation/p4.jpg");
 }
 
 #video_3_1_4>*{
@@ -168,7 +168,7 @@
 }
 
 #video_3_1_5{
-    background-image: url("../public/video recommendation/p5.png");
+    background-image: url("/video recommendation/p5.png");
 }
 
 #video_3_1_5>*{
@@ -176,7 +176,7 @@
 }
 
 #video_3_1_6{
-    background-image: url("../public/video recommendation/p6.jpg");
+    background-image: url("/video recommendation/p6.jpg");
 }
 
 #video_3_1_6>*{
@@ -184,7 +184,7 @@
 }
 
 #video_3_1_7{
-    background-image: url("../public/video recommendation/p7.jpg");
+    background-image: url("/video recommendation/p7.jpg");
 }
 
 #video_3_1_7>*{
@@ -192,7 +192,7 @@
 }
 
 #video_3_1_8{
-    background-image: url("../public/video recommendation/p8.png");
+    background-image: url("/video recommendation/p8.png");
 }
 
 #video_3_1_8>*{
@@ -200,7 +200,7 @@
 }
 
 #video_3_1_9{
-    background-image: url("../public/video recommendation/p9.jpg");
+    background-image: url("/video recommendation/p9.jpg");
 }
 
 #video_3_1_9>*{
@@ -208,7 +208,7 @@
 }
 
 #video_3_1_10{
-    background-image: url("../public/video recommendation/p10.jpg");
+    background-image: url("/video recommendation/p10.jpg");
 }
 
 #video_3_1_10>*{

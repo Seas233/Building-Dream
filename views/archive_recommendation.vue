@@ -1,4 +1,7 @@
 <script setup>
+    import axios from 'axios';
+
+    //档案推荐页面，将档案室按照最后更新时间顺序排列，添加进id="mi"中
 </script>
 
 <template>
@@ -22,7 +25,7 @@
 <style scoped>
 #bac{
     position: fixed;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     width: 100vw;
     height: 100vw;
     background-repeat:no-repeat;

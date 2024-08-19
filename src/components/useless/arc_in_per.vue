@@ -74,7 +74,7 @@ const props = defineProps({
 #a_1_2{
     width: 66px;
     height: 51px;
-    background-image: url("../../public/未命名作品\(1\)\ 拷贝.png");
+    background-image: url("/未命名作品\(1\)\ 拷贝.png");
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;

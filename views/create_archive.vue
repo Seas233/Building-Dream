@@ -38,7 +38,6 @@
     }
     let if_setting_open = ref(false);
     let type = ref("title");
-    //let ri_fun_on = ref(false);
     let ri_fun_on = ref(true);
 
     let sum = reactive([/*
@@ -55,8 +54,10 @@
             content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
         }*/
     ]);
+    
+    const mi_content = ref(null);
 
-    async function add_element()
+    function add_element()
     {
         if(type.value == "title")
         {
@@ -71,6 +72,7 @@
             }
             else{
                 console.log("这是空的诶。。。");
+                return;
             }
         }
         else if(type.value == "text")
@@ -86,6 +88,7 @@
             }
             else{
                 console.log("这是空的诶。。。");
+                return;
             }
         }
         else if(type.value == "pic")
@@ -130,39 +133,34 @@
 
         ri_fun_on.value = false;
 
-        const father = document.getElementById("mi_content");
         let i = sum.length - 1;
         if(type.value == "title")
         {
-            i = 0;
-            let i_ele = document.createElement("div");
-            i_ele.innerHTML = sum[i]["content"];
-            i_ele.id = "mi_headline";
-            i_ele.style = "color: #6B944F;font-size: 2em;display: flex;justify-content: center;margin-bottom: 50px;"
-            father.appendChild(i_ele);
+            const i_ele = document.createElement("div");
+            i_ele.textContent = sum[0]["content"];
+            i_ele.className = "ce_ar__mi_headline";
+            mi_content.value.appendChild(i_ele);
             type.value = "text";
         }
         if(sum[i]["type"] == "text")
         {
             let i_ele = document.createElement("div");
-            i_ele.innerHTML = sum[sum.length - 1]["content"];
-            //i_ele.classList.add("mi_cont_text");
-            i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
+            i_ele.className = "ce_ar__mi_cont_text";
+            i_ele.textContent = sum[sum.length - 1]["content"];
             if(sum[i - 1]["type"] != "text")
             {
                 i_ele.style.marginTop = "30px";
             }
-            father.appendChild(i_ele);
+            mi_content.value.appendChild(i_ele);
         }
         else if(sum[i]["type"] == "pic")
         {
             let i_ele = document.createElement("img");
             //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
             i_ele.src = URL.createObjectURL(sum[i]["file"]);
-            i_ele.width = 300;
-            i_ele.className = "mi_cont_pic";
-            i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
-            father.appendChild(i_ele);
+            i_ele.width = "100%";
+            i_ele.className = "ce_ar__mi_cont_pic";
+            mi_content.value.appendChild(i_ele);
         }
         else if(sum[i]["type"] == "video")
         {
@@ -170,8 +168,8 @@
             i_ele.controls = true;
             //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
             i_ele.src = URL.createObjectURL(sum[i]["file"]);
-            i_ele.style = "width: 100%;height: 400px;margin-top: 30px;object-fit:contain;"
-            father.appendChild(i_ele);
+            i_ele.className = "ce_ar__mi_cont_vid";
+            mi_content.value.appendChild(i_ele);
         }
         else if(sum[i]["type"] == "audio")
         {
@@ -179,9 +177,8 @@
             i_ele.controls = true;
             //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
             i_ele.src = URL.createObjectURL(sum[i]["file"]);
-            i_ele.className = "mi_cont_pic";
-            i_ele.style = "width: 100%;margin-top: 30px;object-fit:contain;"
-            father.appendChild(i_ele);
+            i_ele.className = "ce_ar__mi_cont_aud";
+            mi_content.value.appendChild(i_ele);
         }
     }
 
@@ -277,7 +274,7 @@
         </div>
 
         <div id="mi">
-            <div id="mi_content">
+            <div id="mi_content" ref="mi_content">
                 <!--<div id="mi_headline">{{ sum[0]["content"] }}</div>-->
             </div>
 
@@ -332,7 +329,7 @@
 <style scoped>
 #bac{
     position: fixed;
-    background-image: url("../public/login_bac.png");
+    background-image: url("/login_bac.png");
     width: 100vw;
     height: 100vw;
     background-repeat:no-repeat;
@@ -366,7 +363,7 @@
 }
 
 #profile_picture{
-    background-image: url("../public/头像.png");
+    background-image: url("/头像.png");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -379,7 +376,7 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("../public/更改头像.png");
+    background-image: url("/更改头像.png");
     background-size: cover;
 }
 
@@ -434,7 +431,7 @@
 }
 
 #le_si_1{
-    background-image: url("../public/设置_白.png");
+    background-image: url("/设置_白.png");
     background-repeat: no-repeat;
     background-size: 24px 24px;
     background-position: center center;
@@ -468,28 +465,6 @@
     overflow: auto;
 }
 
-#mi_headline{
-    color: #6B944F;
-    font-size: 2em;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
-}
-
-/*#mi_cont_text{
-    color: #A6E67B;
-    font-size: 1.2em;
-    text-indent: 2em;
-}
-
-.mi_content>img{
-    width: 10%;
-    margin-top: 30px;
-    object-fit:contain;
-    display: block;
-    margin: 0 auto;
-}*/
-
 .mi_1{
     display: flex;
     flex-direction: row-reverse;
@@ -497,7 +472,7 @@
 
 #append_buttom{
     background-color: #b3f0a2;
-    background-image: url("../public/图层 0.png");
+    background-image: url("/图层 0.png");
     background-size: 60px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -509,7 +484,7 @@
 
 #send_buttom{
     background-color: #6B944F;
-    background-image: url("../public/图层 0.png");
+    background-image: url("/图层 0.png");
     background-size: 60px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -599,5 +574,43 @@
     justify-content: center;
 
     background-color: #A6E67B;
+}
+</style>
+
+<style>
+.ce_ar__mi_headline{
+    color: #6B944F;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.ce_ar__mi_cont_text{
+    color: #6B944F;
+    font-size: 1.2em;
+    text-indent: 2em;
+    line-height: 1.5em;
+    letter-spacing: 1px;
+}
+
+.ce_ar__mi_cont_pic{
+    width: 100%;
+    height: 400px;
+    margin-top: 30px;
+    object-fit: contain;
+}
+
+.ce_ar__mi_cont_vid{
+    width: 100%;
+    height: 400px;
+    margin-top: 30px;
+    object-fit: contain;
+}
+
+.ce_ar__mi_cont_aud{
+    width: 100%;
+    margin-top: 30px;
+    object-fit:contain;
 }
 </style>
