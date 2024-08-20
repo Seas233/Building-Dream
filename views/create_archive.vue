@@ -4,7 +4,7 @@
     import setting from "../src/components/setting.vue";
     import { useRouter } from 'vue-router';
 
-    let apiUrl = 'http://localhost:5174';
+    let apiUrl = 'http://localhost:8000';
 
     const router = useRouter();
 
@@ -40,20 +40,7 @@
     let type = ref("title");
     let ri_fun_on = ref(true);
 
-    let sum = reactive([/*
-        {
-            type:"headline",
-            content:"一棵树摇动另一棵树，一朵云推动另一朵云",
-        },
-        {
-            type:"text",
-            content:"他们渴望走出大山，我们选择远赴千里;他们喜欢仰望星空，我们善于点亮希望;他们畅想诗和远方，我们播下种子，让未来不在苟且。"
-        },
-        {
-            type:"text",
-            content:"我为什么想去支教呢?这个问题我在报名之前思索过很久，也许是在我短短四年大学生涯里，结识过几位对我人生影响十分重大的恩师.."
-        }*/
-    ]);
+    let sum = reactive([]);
     
     const mi_content = ref(null);
 
@@ -199,8 +186,8 @@
     }
 
     async function send_paper()
-    {
-        axios.post(apiUrl + "/add_paper",{
+    {///paper/abcd/papers/
+        axios.post(apiUrl + "/paper/abcd/papers/",{
             "content": sum,
             "id": 0,
             "ArchiveId": 0
@@ -212,33 +199,6 @@
                 console.log(error);
             });
     }
-
-    //初始加载
-    /*onMounted(() => {
-        const father = document.getElementById("mi_content");
-        for(let i = 1;i < sum.length;i++)
-        {
-            if(sum[i]["type"] == "text")
-            {
-                let i_ele = document.createElement("div");
-                i_ele.innerHTML = sum[i]["content"];
-
-                //i_ele.classList.add("mi_cont_text");
-                //i_ele.className = "mi_cont_text";
-                i_ele.style = "color: #6B944F;font-size: 1.2em;text-indent: 2em;line-height: 1.5em;letter-spacing: 1px;"
-
-                father.appendChild(i_ele);
-            }
-            else if(sum[i]["type"] == "pic")
-            {
-                let i_ele = document.createElement("img");
-                i_ele.src = sum[i]["file"];
-                i_ele.className = "mi_cont_pic";
-                i_ele.width = "100%";
-                father.appendChild(i_ele);
-            }
-        }
-    })*/
 </script>
 
 <template>

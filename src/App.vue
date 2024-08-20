@@ -1,11 +1,20 @@
 <script setup>
-import {ref,computed} from "vue";
-import { useRouter } from 'vue-router';
+    import {ref,computed} from "vue";
+    import { useRouter } from 'vue-router';
 
-const router = useRouter()
+    const router = useRouter()
 
-//router.push('/main');
+    //router.push('/main');
 
+    let current_user = -1;
+
+    //检查登录
+    router.beforeEach(async (to, from) => {
+        if(current_user == 0 && to.name == 'user')
+        {
+            return { name: 'login'}
+        }
+    })
 </script>
 
 <template>
@@ -13,15 +22,15 @@ const router = useRouter()
     <div id="app_head">
         <div id="app_head_left">筑梦云窗</div>
          <div id="app_head_right">
-            <div @click="router.push('/login')">首页</div>
+            <div @click="router.push('/main')">首页</div>
             <div @click="router.push('/archive_recommendation')">档案推荐</div>
-            <div @click="router.push('/user/112')">个人主页</div>
+            <div @click="router.push('/user/' + current_user)">个人主页</div>
             <div>联系我们</div>
             <div @click="router.push('/login')">登录</div>
         </div>
     </div>
 
-    <router-view></router-view>
+    <router-view :current_user=current_user></router-view>
 
    <div id="app_buttom">
     <!--
