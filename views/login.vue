@@ -3,11 +3,11 @@
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
 
-    let apiUrl = 'http://localhost:5174';
+    let apiUrl = 'http://localhost:8000';
     let time_count = 0;
     let condition = ref("login");
 
-    let yuka;
+    let yuka = '';
 
     let router = useRouter();
 
@@ -23,8 +23,7 @@
             let yuka_ele = document.getElementById("yuka");
             yuka = yuka_ele.value;
             /*{params: {"email": yuka}}*/
-            console.log(apiUrl + "/user/login-signup/send-email")
-            axios.post(apiUrl + "/user/login-signup/send-email",)
+            axios.post(apiUrl + "/user/login-signup/send-email",{"email": yuka})
                 .then(function (response) {
                     console.log(response);
                 })
@@ -57,19 +56,13 @@
             "id": 0
             }};*/
         let res = {
+            "username": document.getElementById("name").value,
+            "password": "string",
             "email": yuka,
-            "name": document.getElementById("name").value,
-            "school": document.getElementById("school").value,
-            "personal_sign": document.getElementById("personal_sign").value,
-            "description": "string",
-            "coin": 0,
-            "image": 0,
-            "image_show": false,
-            "archives_show": false,
-            "id": 0
+            "captcha": "string"
         };
         console.log(res);
-        axios.post(apiUrl + "/register",res)
+        axios.post(apiUrl + "/user/login-signup/sign-up",res)
             .then(function (response){
                 //console.log(response);
             })
@@ -121,15 +114,13 @@
 
                 <div id="lo_ui_input">
                     <div id="input_1">
-                        <div>昵  称</div>
-                        <div style="margin-top: 1.5em;">学  校</div>
-                        <div style="margin-top: 1.5em;">个性签名</div>
+                        <div>姓  名</div>
+                        <div style="margin-top: 1.5em;">密  码</div>
                     </div>
-                    <div id="input_2" style="height: 18em;"></div>
+                    <div id="input_2"></div>
                     <div id="input_3">
                         <input type="text" name="" id="name">
-                        <input type="text" name="" id="school" style="margin-top: 1.5em;">
-                        <input type="text" name="" id="personal_sign" style="margin-top: 1.5em;">
+                        <input type="text" name="" id="password" style="margin-top: 1.5em;">
                     </div>
                 </div>
 

@@ -1,9 +1,26 @@
 <script setup>
-    import { onMounted,ref, watch } from 'vue';
+    import { onMounted,reactive,ref,watch,defineProps } from 'vue';
     import setting from "../src/components/setting.vue";
     import { useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
+    import axios from 'axios';
+import Archive from './archive.vue';
+    
+    const props = defineProps({
+        current_user: {
+            type: Number,
+            default: ""
+        }
+    })
 
-    const router = useRouter()
+    const router = useRouter();
+    const route = useRoute();
+
+    //确认当前个人页面的id和登陆者的id一样,开放修改档案操作
+    if(props.current_user == route.params.id)
+    {
+        console.log("yes!")
+    }
 
     onMounted(() => {
         let pic = document.getElementById("profile_picture")
@@ -26,14 +43,60 @@
     windowHeight.value = window.innerHeight
     });
 
-    let user = {
-        name:"爱丽丝",
-        team:7355608,
-        ip:"千年",
-        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-        school:"千年科技学院",
-    }
+    let user=reactive(),teamlist = [];
     let if_setting_open = ref(false);
+
+    if(route.params.id <= 0)
+    {
+        user = reactive({
+            name:"爱丽丝",
+            ip:"千年",
+            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+            school:"千年科技学院",
+            team:[-1,-2,-3]
+        })
+    }
+    else
+    {
+        //此处获取用户信息
+        /*axios.post(apiUrl + "",{
+            })
+            .then(function (response) {
+                user = response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });*/
+    }
+
+    console.log(user["team"].length)
+
+    for(let i = 0;i < user["team"].length;i++)
+    {
+        if(user["team"][i] < 0)
+        {
+            teamlist.push({name:"山大厨艺学院第"+ i + "支教队",
+                archiveroom:[
+                    {
+                        name:"玩档玩的",
+                        archive:[
+                            {title:"日服结算室外GOZ大决战",id:112},
+                            {title:"总力室内黑白TM一图流参考",id:113}
+                        ]
+                    },
+                    {
+                        name:"玩粥玩的",
+                        archive:[
+                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
+                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113}
+                        ]
+                    }
+                ]
+            })
+        }
+    }
+
+    console.log(teamlist)
 </script>
 
 <template>
@@ -60,26 +123,10 @@
                 <div id="school">{{ user["school"] }}</div><div></div>
             </div>
 
-            <!--<div id="le_th">
-                <div>
-                    <div>{{ user["follow"] }}</div>
-                    <p></p>
-                    关注
-                </div>
-
-                <div>
-                    <div>{{ user["fans"] }}</div>
-                    粉丝
-                </div>
-
-                <div>
-                    <div>{{ user["follow"] }}</div>
-                    获赞
-                </div>
-            </div>-->
-
-            <div id="le_fo"></div>
-            <div id="le_fi"></div>
+            <!--队伍信息-->
+            <div id="le_team">
+                <div class="le_team_i" v-for="i in teamlist">{{ i["name"] }}</div>
+            </div>
 
             <div id="le_si">
                 <div id="le_si_2">修改资料</div>
@@ -88,10 +135,15 @@
         </div>
 
         <div id="mi">
-            <div>
-                <div id="mi_head">{{  }}支教档案</div>
+            <div v-for="i in teamlist">
+                <div id="mi_head">{{ i["name"] }}支教档案</div>
+
                 <div id="mi_body">
-                    <!--这里塞支教档案-->
+                    <div v-for="j in i['archiveroom']">{{ j["name"] }}
+                        <div v-for="k in j['archive']">
+                            <div @click="() => router.push('/archive/' + k['id'])">{{ k["title"] }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="mi_pic" @click="router.push('/create_archive')"></div>
@@ -198,10 +250,19 @@
     justify-content: center;
 }
 
-#le_fo,#le_fi{
+.le_team_i{
     background-color: #b3f0a2;
-    height: 150px;
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 30px;
     margin-top: 30px;
+
+    height: 4em;
+    border-radius: 1em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #le_si{
@@ -269,22 +330,7 @@
     margin-bottom: 100px;
 }
 
-#mi_body{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-gap: 20px;
-}
 
-#mi_body>*{
-
-    width: 100px;
-    height: 100px;
-
-    background-image: url("/light_on.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: top;
-}
 
 #mi_pic{
     position: absolute;

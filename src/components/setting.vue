@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits,ref } from 'vue';
+import { ref } from 'vue';
 
 const emit = defineEmits(['setting_close']);
 
