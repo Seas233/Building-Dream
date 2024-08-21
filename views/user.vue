@@ -4,7 +4,6 @@
     import { useRouter } from 'vue-router';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
-import Archive from './archive.vue';
     
     const props = defineProps({
         current_user: {
@@ -15,12 +14,6 @@ import Archive from './archive.vue';
 
     const router = useRouter();
     const route = useRoute();
-
-    //确认当前个人页面的id和登陆者的id一样,开放修改档案操作
-    if(props.current_user == route.params.id)
-    {
-        console.log("yes!")
-    }
 
     onMounted(() => {
         let pic = document.getElementById("profile_picture")
@@ -43,17 +36,17 @@ import Archive from './archive.vue';
     windowHeight.value = window.innerHeight
     });
 
-    let user=reactive(),teamlist = [];
+    let user,teamlist = [];
     let if_setting_open = ref(false);
 
-    if(route.params.id <= 0)
+    if(route.query.user_id <= 0)
     {
         user = reactive({
             name:"爱丽丝",
             ip:"千年",
             personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
             school:"千年科技学院",
-            team:[-1,-2,-3]
+            team:[-1,-4,-3,-2]
         })
     }
     else
@@ -69,34 +62,39 @@ import Archive from './archive.vue';
             });*/
     }
 
-    console.log(user["team"].length)
-
     for(let i = 0;i < user["team"].length;i++)
     {
         if(user["team"][i] < 0)
         {
-            teamlist.push({name:"山大厨艺学院第"+ i + "支教队",
+            let add = {name:"千年游戏开发部第"+ i + "支教队",
+                id:i,
                 archiveroom:[
                     {
                         name:"玩档玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
                         archive:[
                             {title:"日服结算室外GOZ大决战",id:112},
-                            {title:"总力室内黑白TM一图流参考",id:113}
+                            {title:"总力室内黑白TM一图流参考",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
                         ]
                     },
                     {
                         name:"玩粥玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
                         archive:[
                             {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113}
+                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
+                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
                         ]
                     }
                 ]
-            })
+            }
+            teamlist.push(add)
         }
     }
-
-    console.log(teamlist)
 </script>
 
 <template>
@@ -111,9 +109,8 @@ import Archive from './archive.vue';
                     <div id="change_pic"></div>
                 </div>
 
-                <div style="margin-left: 5%;display: grid;">
+                <div style="margin-left: 15%;display: grid;">
                     <div id="name">{{ user["name"] }}</div>
-                    <!--<div id="ip">ip属地:{{ user["ip"] }}</div>-->
                 </div>
             </div>
 
@@ -135,27 +132,37 @@ import Archive from './archive.vue';
         </div>
 
         <div id="mi">
+            <div style="height: 30px;"></div>
+            
             <div v-for="i in teamlist">
-                <div id="mi_head">{{ i["name"] }}支教档案</div>
+                <!--支教队-->
+                <div class="team_head">{{ i["name"] }}支教档案</div>
 
-                <div id="mi_body">
-                    <div v-for="j in i['archiveroom']">{{ j["name"] }}
-                        <div v-for="k in j['archive']">
-                            <div @click="() => router.push('/archive/' + k['id'])">{{ k["title"] }}</div>
+                <!--档案室-->
+                <div class="room_" v-for="j in i['archiveroom']">
+                    <div class="room_head">档案室：{{ j["name"] }}</div>
+
+                    <div class="room_time">创建：{{ j["create_time"] }}<p></p>更改：{{ j["latest_time"] }}</div>
+                    
+                    <!--档案-->
+                    <div class="room_body">
+                        <div class="arc_" v-for="k in j['archive']" @click="router.push('/archive' + k['id'])">
+                            <div class="arc_pic"></div>
+                            <div class="arc_title">{{ k["title"] }}</div>
                         </div>
+                        <div class="arc_add" v-if="props.current_user == route.query.user_id" @click="router.push({path: '/create_archive', query: { user_id: route.params.user_id,arc_id: i['id'] }})"></div>
                     </div>
                 </div>
             </div>
-            <div id="mi_pic" @click="router.push('/create_archive')"></div>
         </div>
 
         <div></div>
 
-        <div id="ri">
+        <!--<div id="ri">
+            
             <div id="ri_pic_bac"></div>
-            <div id="ri_pic">
-            </div>
-        </div>
+            <div id="ri_pic"></div>
+        </div>-->
 
         <div></div>
     </div>
@@ -175,14 +182,16 @@ import Archive from './archive.vue';
 #lo{
     width: 100%;
     position: relative;
+
     display: grid;
     grid-template-columns: 10fr 21fr 30px 10fr 30px;
+
+    padding-top: 120px;
 }
 
 #lo>*{
     width: 100%;
     height: 100%;
-    padding-top: 120px;
 }
 
 #le{
@@ -196,7 +205,7 @@ import Archive from './archive.vue';
 }
 
 #profile_picture{
-    background-image: url("/头像.png");
+    background-image: url("/测试头像.jpg");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -209,18 +218,18 @@ import Archive from './archive.vue';
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("/更改头像.png");
+    background-image: url("/更改测试头像.jpg");
     background-size: cover;
 }
 
 #name{
-    color: #A6E67B;
+    color: #6B944F;
     font-size: 2em;
     font-weight:900;
 }
 
 #team,#ip,#le_sec{
-    color: #A6E67B;
+    color: #6B944F;
     margin-top: 0.4em;
     font-size: 1.5em;
 }
@@ -303,22 +312,24 @@ import Archive from './archive.vue';
 
 #mi{
     position: relative;
-    display: grid;
-    grid-template-rows: auto 300px;
+    background-color: rgba(255,255,255,0.43);
+}
+
+#mi::before{
+    height: 120px;
 }
 
 #mi>*{
     width: 100%;
-    height: 100%;
-    background-color: rgba(255,255,255,0.43);
 
-    padding-top: 20px;
     padding-left: 100px;
     padding-right: 100px;
 }
 
-#mi_head{
-    color: #A6E67B;
+/*施工区 */
+
+.team_head{
+    color: #6B944F;
     font-size: 2em;
     font-weight: 900;
 
@@ -327,34 +338,73 @@ import Archive from './archive.vue';
     display: flex;
     justify-content: center;
 
-    margin-bottom: 100px;
+    margin-bottom: 30px;
 }
 
+.room{
+    margin-bottom: 30px;
+}
 
+.room_head{
+    font-size: 1.5em;
+    color: #6B944F;
+    margin-bottom: 15px;
+}
 
-#mi_pic{
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    z-index: 10;
+.room_time{
+    margin-bottom: 15px;
+}
 
-    background-image: url("/女1Q.png");
-    background-size: contain;
+.room_body{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 25px;
+    padding-bottom: 15px;
+}
+
+.arc_{
+    width: 200px;
+    height: 200px;
+    background-color: #b3f0a2;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.arc_pic{
+    background-image: url("/档案.png");
     background-repeat: no-repeat;
-    background-position: bottom right;
-
+    background-position: center center;
+    background-size: auto 100px;
+    height: 100px;
     width: 100%;
-    height: 300px;
-
-    transform: scaleX(-1);
+    margin-bottom: 10px;
 }
+
+.arc_title{
+    font-size: 1.1em;
+}
+
+.arc_add{
+    width: 200px;
+    height: 200px;
+    background-color: #b3f0a2;
+    background-image: url("/图层 0.png");
+    background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 20px;
+}
+
+/*施工区末端 */
 
 #ri{
     position: relative;
-
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+
+    height: 100%;
+    width: 100%;
 }
 
 #ri_pic_bac{
@@ -369,6 +419,7 @@ import Archive from './archive.vue';
 
     position: absolute;
     z-index: 1;
+    bottom: 0px;
 }
 
 #ri_pic{
@@ -378,7 +429,7 @@ import Archive from './archive.vue';
     background-position: center bottom;
     
     width: 40%;
-    height: 100%;
+    height: 700px;
 
     position: absolute;
     z-index: 3;

@@ -24,7 +24,7 @@
          <div id="app_head_right">
             <div @click="router.push('/main')">首页</div>
             <div @click="router.push('/archive_recommendation')">档案推荐</div>
-            <div @click="router.push('/user/' + current_user)">个人主页</div>
+            <div @click="router.push({path: '/user', query: { user_id: current_user }})">个人主页</div>
             <div>联系我们</div>
             <div @click="router.push('/login')">登录</div>
         </div>
