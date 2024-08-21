@@ -14,9 +14,9 @@ const routes = [
     { name: "create_archive", path: "/create_archive", component: () => import('../views/create_archive.vue') },
 
     { name: "archive_recommendation", path: "/archive_recommendation", component: () => import('../views/archive_recommendation.vue') },
-    { name: "user", path: "/user/:id", component: () => import('../views/user.vue') },
-    { name: "archive", path: "/archive/:id", component: () => import('../views/archive.vue') },
-    { name: "team", path: "/team/:id", component: () => import('../views/team.vue') },
+    { name: "user", path: "/user", component: () => import('../views/user.vue') },
+    { name: "archive", path: "/archive", component: () => import('../views/archive.vue') },
+    { name: "team", path: "/team", component: () => import('../views/team.vue') },
     /*// router.js
 const routes = [
   // 動態欄位以冒號開始

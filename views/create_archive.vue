@@ -1,12 +1,21 @@
 <script setup>
-    import axios from 'axios';
     import { onMounted,ref, watch,reactive } from 'vue';
     import setting from "../src/components/setting.vue";
     import { useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
+    import axios from 'axios';
+    
+    const props = defineProps({
+        current_user: {
+            type: Number,
+            default: ""
+        }
+    })
 
     let apiUrl = 'http://localhost:8000';
 
     const router = useRouter();
+    const route = useRoute();
 
     onMounted(() => {
         let pic = document.getElementById("profile_picture")
@@ -29,16 +38,67 @@
     windowHeight.value = window.innerHeight
     });
 
-    let user = {
-        name:"爱丽丝",
-        team:7355608,
-        ip:"千年",
-        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-        school:"千年科技学院",
-    }
+    let user,teamlist = [];
     let if_setting_open = ref(false);
     let type = ref("title");
     let ri_fun_on = ref(true);
+
+    
+    if(props.current_user <= 0)
+    {
+        user = reactive({
+            name:"爱丽丝",
+            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+            school:"千年科技学院",
+            team:[-1,-4,-3,-2]
+        })
+    }
+    else
+    {
+        //此处获取用户信息
+        /*axios.post(apiUrl + "",{
+            })
+            .then(function (response) {
+                user = response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });*/
+    }
+
+    for(let i = 0;i < user["team"].length;i++)
+    {
+        if(user["team"][i] < 0)
+        {
+            let add = {name:"千年游戏开发部第"+ i + "支教队",
+                id:i,
+                archiveroom:[
+                    {
+                        name:"玩档玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
+                        archive:[
+                            {title:"日服结算室外GOZ大决战",id:112},
+                            {title:"总力室内黑白TM一图流参考",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                        ]
+                    },
+                    {
+                        name:"玩粥玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
+                        archive:[
+                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
+                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
+                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
+                        ]
+                    }
+                ]
+            }
+            teamlist.push(add)
+        }
+    }
 
     let sum = reactive([]);
     
@@ -213,7 +273,7 @@
                     <div id="change_pic"></div>
                 </div>
 
-                <div style="margin-left: 5%;display: grid;">
+                <div style="margin-left: 15%;display: grid;">
                     <div id="name">{{ user["name"] }}</div>
                 </div>
             </div>
@@ -224,13 +284,11 @@
                 <div id="school">{{ user["school"] }}</div><div></div>
             </div>
 
-            <div id="le_fo"></div>
-            <div id="le_fi"></div>
-
-            <div id="le_si">
-                <div id="le_si_2">修改资料</div>
-                <div id="le_si_1" @click="if_setting_open = true;"></div>
+            <!--队伍信息-->
+            <div id="le_team">
+                <div class="le_team_i" v-for="i in teamlist">{{ i["name"] }}</div>
             </div>
+
         </div>
 
         <div id="mi">
@@ -323,7 +381,7 @@
 }
 
 #profile_picture{
-    background-image: url("/头像.png");
+    background-image: url("/测试头像.jpg");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -336,18 +394,18 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("/更改头像.png");
+    background-image: url("/更改测试头像.jpg");
     background-size: cover;
 }
 
 #name{
-    color: #A6E67B;
+    color: #6B944F;
     font-size: 2em;
     font-weight:900;
 }
 
 #team,#ip,#le_sec{
-    color: #A6E67B;
+    color: #6B944F;
     margin-top: 0.4em;
     font-size: 1.5em;
 }
@@ -377,10 +435,19 @@
     justify-content: center;
 }
 
-#le_fo,#le_fi{
+.le_team_i{
     background-color: #b3f0a2;
-    height: 150px;
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 30px;
     margin-top: 30px;
+
+    height: 4em;
+    border-radius: 1em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #le_si{

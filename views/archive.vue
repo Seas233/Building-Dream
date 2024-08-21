@@ -1,14 +1,20 @@
 <script setup>
-    import axios from 'axios';
-    import { onMounted,ref, watch,reactive } from 'vue';
+    import { onMounted,reactive,ref,watch,defineProps } from 'vue';
     import setting from "../src/components/setting.vue";
     import { useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
+    import axios from 'axios';
 
-    let apiUrl = 'http://localhost:5174';
+    const props = defineProps({
+        current_user: {
+            type: Number,
+            default: ""
+        }
+    })
 
     const router = useRouter();
+    const route = useRoute();
 
-    //维持头像图片正方形
     onMounted(() => {
         let pic = document.getElementById("profile_picture")
         pic.style.height = pic.offsetWidth + "px";
@@ -30,15 +36,66 @@
     windowHeight.value = window.innerHeight
     });
 
-    
+    let user,teamlist = [];
     let if_setting_open = ref(false);
-    //用户资料和页面内容测试，应该从后端接受。。。
-    let user = {
-        name:"爱丽丝",
-        team:7355608,
-        ip:"千年",
-        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-        school:"千年科技学院",
+
+    console.log(route.query.user_id)
+
+    if(route.query.user_id <= 0)
+    {
+        user = reactive({
+            name:"爱丽丝",
+            ip:"千年",
+            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+            school:"千年科技学院",
+            team:[-1,-4,-3,-2]
+        })
+    }
+    else
+    {
+        //此处获取用户信息
+        /*axios.post(apiUrl + "",{
+            })
+            .then(function (response) {
+                user = response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });*/
+    }
+
+    for(let i = 0;i < user["team"].length;i++)
+    {
+        if(user["team"][i] < 0)
+        {
+            let add = {name:"千年游戏开发部第"+ i + "支教队",
+                id:i,
+                archiveroom:[
+                    {
+                        name:"玩档玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
+                        archive:[
+                            {title:"日服结算室外GOZ大决战",id:112},
+                            {title:"总力室内黑白TM一图流参考",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                        ]
+                    },
+                    {
+                        name:"玩粥玩的",
+                        create_time:"2024年8月21日",
+                        latest_time:"2024年8月25日",
+                        archive:[
+                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
+                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
+                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
+                        ]
+                    }
+                ]
+            }
+            teamlist.push(add)
+        }
     }
 
     let sum = reactive([
@@ -195,7 +252,7 @@
 }
 
 #profile_picture{
-    background-image: url("/头像.png");
+    background-image: url("/测试头像.jpg");
     background-size: cover;
     border-radius: 50%; 
     border: 3px solid white;
@@ -208,7 +265,7 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("/更改头像.png");
+    background-image: url("/更改测试头像.jpg");
     background-size: cover;
 }
 
