@@ -3,7 +3,7 @@
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
 
-    let apiUrl = 'http://localhost:8000';
+    let apiUrl = 'http://127.0.0.1:8000';
     let time_count = 0;
     let condition = ref("login");
 

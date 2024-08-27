@@ -43,6 +43,7 @@
     {
         user = reactive({
             name:"爱丽丝",
+            id:-1,
             ip:"千年",
             personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
             school:"千年科技学院",
@@ -111,18 +112,20 @@
 
                 <div style="margin-left: 15%;display: grid;">
                     <div id="name">{{ user["name"] }}</div>
+                    <div id="id">id: {{ user["id"] }}</div>
                 </div>
             </div>
 
             <div id="le_sec">个性签名：{{ user["personal_sign"] }}</div>
 
             <div style="display: flex;">
-                <div id="school">{{ user["school"] }}</div><div></div>
+                <div id="school">{{ user["school"] }}</div>
+                <div></div>
             </div>
 
             <!--队伍信息-->
             <div id="le_team">
-                <div class="le_team_i" v-for="i in teamlist">{{ i["name"] }}</div>
+                <div class="le_team_i" v-for="i in teamlist" @click="router.push({path: '/team', query: {team_id: i['id'] }})">{{ i["name"] }}</div>
             </div>
 
             <div id="le_si">
@@ -146,7 +149,7 @@
                     
                     <!--档案-->
                     <div class="room_body">
-                        <div class="arc_" v-for="k in j['archive']" @click="router.push('/archive' + k['id'])">
+                        <div class="arc_" v-for="k in j['archive']" @click="router.push({path: '/archive',query: {arc_id: k['id']}})">
                             <div class="arc_pic"></div>
                             <div class="arc_title">{{ k["title"] }}</div>
                         </div>
@@ -184,7 +187,7 @@
     position: relative;
 
     display: grid;
-    grid-template-columns: 10fr 21fr 30px 10fr 30px;
+    grid-template-columns: minmax(350px,10fr) minmax(735px,21fr) 30px minmax(350px,10fr);
 
     padding-top: 120px;
 }
@@ -218,29 +221,31 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    background-image: url("/更改测试头像.jpg");
+    background-image: url("/更改头像.png");
     background-size: cover;
+    align-content: center;
 }
 
 #name{
     color: #6B944F;
     font-size: 2em;
     font-weight:900;
+    align-content: center;
 }
 
-#team,#ip,#le_sec{
+#id{
     color: #6B944F;
     margin-top: 0.4em;
-    font-size: 1.5em;
-}
-
-#name,#team,#ip{
+    font-size: 1.2em;
     align-content: center;
 }
 
 #le_sec{
     padding-top: 30px;
     padding-bottom: 30px;
+    color: #A6E67B;
+    margin-top: 0.4em;
+    font-size: 1.5em;
 }
 
 #school{
