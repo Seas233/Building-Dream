@@ -12,7 +12,7 @@
         }
     })
 
-    let apiUrl = 'http://localhost:8000';
+    let apiUrl = 'http://127.0.0.1:8000';
 
     const router = useRouter();
     const route = useRoute();
@@ -100,7 +100,7 @@
         }
     }
 
-    let sum = reactive([]);
+    let sum = [];
     
     const mi_content = ref(null);
 
@@ -203,11 +203,13 @@
         else if(sum[i]["type"] == "pic")
         {
             let i_ele = document.createElement("img");
-            //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
+            
             i_ele.src = URL.createObjectURL(sum[i]["file"]);
+            
             i_ele.width = "100%";
             i_ele.className = "ce_ar__mi_cont_pic";
             mi_content.value.appendChild(i_ele);
+            //i_ele.src = sum[i]["file"];URL.createObjectURL(file)
         }
         else if(sum[i]["type"] == "video")
         {
@@ -246,7 +248,8 @@
     }
 
     async function send_paper()
-    {///paper/abcd/papers/
+    {
+        /*
         axios.post(apiUrl + "/paper/abcd/papers/",{
             "content": sum,
             "id": 0,
@@ -257,7 +260,7 @@
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            }); */
     }
 </script>
 
@@ -360,7 +363,7 @@
     position: relative;
 
     display: grid;
-    grid-template-columns: 10fr 21fr 30px 10fr 30px;
+    grid-template-columns: minmax(350px,10fr) minmax(735px,21fr) 30px minmax(350px,10fr);
 
     padding-top: 120px;
 }

@@ -37,7 +37,7 @@
     width: 100%;
     position: relative;
     display: grid;
-    grid-template-columns: 10fr 30px 21fr 30px 10fr;
+    grid-template-columns: minmax(350px,10fr) 30px minmax(735px,21fr) 30px minmax(350px,10fr);
 }
 
 #mi{
