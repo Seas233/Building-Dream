@@ -1,9 +1,10 @@
 <script setup>
-    import { onMounted,ref, watch,reactive } from 'vue';
-    import setting from "../src/components/setting.vue";
+    import { ref,reactive } from 'vue';
     import { useRouter } from 'vue-router';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
+
+    import team_module from '../src/components/team_module.vue';
     
     const props = defineProps({
         current_user: {
@@ -17,88 +18,31 @@
     const router = useRouter();
     const route = useRoute();
 
-    onMounted(() => {
-        let pic = document.getElementById("profile_picture")
-        pic.style.height = pic.offsetWidth + "px";
-    })
-
-    const windowWidth = ref(window.innerWidth);
-    const windowHeight = ref(window.innerHeight);
-
-    watch(
-    () => [windowWidth.value, windowHeight.value],
-    () => {
-        let pic = document.getElementById("profile_picture")
-        pic.style.height = pic.offsetWidth + "px";
-    }
-    );
-
-    window.addEventListener('resize', () => {
-    windowWidth.value = window.innerWidth
-    windowHeight.value = window.innerHeight
-    });
-
     let user,teamlist = [];
     let if_setting_open = ref(false);
     let type = ref("title");
     let ri_fun_on = ref(true);
+    let test = ref(true);
 
-    
-    if(props.current_user <= 0)
-    {
-        user = reactive({
-            name:"爱丽丝",
-            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-            school:"千年科技学院",
-            team:[-1,-4,-3,-2]
-        })
-    }
-    else
-    {
-        //此处获取用户信息
-        /*axios.post(apiUrl + "",{
-            })
-            .then(function (response) {
-                user = response;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });*/
-    }
+    //------------------------
+    //此处由room_id查找到对应的队伍id
+    //route.query.room_id => team_id;
+    let team_info = {
+        name: "春晖支教队",
+        id: -1,
+        school:"千年科技学院",
+        describe:"为什么游戏开发部会去支教？？",
+        member:[-1,-2,-3,-4,-5]
+    };
 
-    for(let i = 0;i < user["team"].length;i++)
-    {
-        if(user["team"][i] < 0)
-        {
-            let add = {name:"千年游戏开发部第"+ i + "支教队",
-                id:i,
-                archiveroom:[
-                    {
-                        name:"玩档玩的",
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"日服结算室外GOZ大决战",id:112},
-                            {title:"总力室内黑白TM一图流参考",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                        ]
-                    },
-                    {
-                        name:"玩粥玩的",
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
-                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
-                        ]
-                    }
-                ]
-            }
-            teamlist.push(add)
-        }
-    }
+    const member_list = [
+        {id: -5,name:"邮箱大魔王",profile_picture_url:"none"},
+        {id: -2,name:"王小桃",profile_picture_url:"none"},
+        {id: -3,name:"王小绿",profile_picture_url:"none"},
+        {id: -4,name:"yuzi",profile_picture_url:"none"},
+        {id: -1,name:"爱丽丝",profile_picture_url:"none"},
+    ]
+    //---------------------------------
 
     let sum = [];
     
@@ -249,6 +193,7 @@
 
     async function send_paper()
     {
+        test.value = false;
         /*
         axios.post(apiUrl + "/paper/abcd/papers/",{
             "content": sum,
@@ -261,37 +206,17 @@
             .catch(function (error) {
                 console.log(error);
             }); */
+        
     }
 </script>
 
 <template>
-    <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
 
     <div id="bac"></div>
 
     <div id="lo">
         <div id="le">
-            <div id="le_top">
-                <div id="profile_picture">
-                    <div id="change_pic"></div>
-                </div>
-
-                <div style="margin-left: 15%;display: grid;">
-                    <div id="name">{{ user["name"] }}</div>
-                </div>
-            </div>
-
-            <div id="le_sec">个性签名：{{ user["personal_sign"] }}</div>
-
-            <div style="display: flex;">
-                <div id="school">{{ user["school"] }}</div><div></div>
-            </div>
-
-            <!--队伍信息-->
-            <div id="le_team">
-                <div class="le_team_i" v-for="i in teamlist">{{ i["name"] }}</div>
-            </div>
-
+            <team_module :team_info="team_info" :member_list="member_list" :stay="true"></team_module>
         </div>
 
         <div id="mi">
@@ -300,14 +225,14 @@
             </div>
 
             <div class="mi_1">
-                <div id="send_buttom" @click="send_paper"></div>
-                <div id="append_buttom" @click="ri_fun_on = true"></div>
+                <div id="send_buttom" @click="send_paper" v-if="test"></div>
+                <div id="append_buttom" @click="ri_fun_on = true" v-if="test"></div>
             </div>
         </div>
 
         <div></div>
 
-        <div id="ri">
+        <div id="ri" v-show="test">
             <div id="ri_fun" v-if="ri_fun_on">
                 <div id="ri_bu">
                     <div id="type_choice" v-if="type != 'title'">
@@ -405,6 +330,13 @@
     color: #6B944F;
     font-size: 2em;
     font-weight:900;
+}
+
+#id{
+    color: #6B944F;
+    margin-top: 0.4em;
+    font-size: 1.2em;
+    align-content: center;
 }
 
 #team,#ip,#le_sec{

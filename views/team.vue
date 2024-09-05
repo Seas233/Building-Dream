@@ -1,9 +1,10 @@
 <script setup>
     import { onMounted,reactive,ref,watch,defineProps } from 'vue';
-    import setting from "../src/components/setting.vue";
+    import setting from "../src/components/useless/setting.vue";
     import { useRouter } from 'vue-router';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
+    import team_module from '../src/components/team_module.vue';
 
     const props = defineProps({
         current_user: {
@@ -45,7 +46,7 @@
     if(route.query.team_id < 10)
     {
         team_info = {
-            name: "千年游戏开发部第1支教队",
+            name: "春晖支教队",
             id: -1,
             school:"千年科技学院",
             describe:"为什么游戏开发部会去支教？？",
@@ -54,6 +55,7 @@
         archiveroom = [
             {
                 name:"玩档玩的",
+                id:1,
                 create_time:"2024年8月21日",
                 latest_time:"2024年8月25日",
                 archive:[
@@ -65,6 +67,7 @@
             },
             {
                 name:"玩粥玩的",
+                id:2,
                 create_time:"2024年8月21日",
                 latest_time:"2024年8月25日",
                 archive:[
@@ -80,11 +83,11 @@
     }
 
     const test_member_info = [
-        {id: -1,name:"邮箱大魔王",profile_picture_url:"none"},
+        {id: -5,name:"邮箱大魔王",profile_picture_url:"none"},
         {id: -2,name:"王小桃",profile_picture_url:"none"},
         {id: -3,name:"王小绿",profile_picture_url:"none"},
         {id: -4,name:"yuzi",profile_picture_url:"none"},
-        {id: -5,name:"爱丽丝",profile_picture_url:"none"},
+        {id: -1,name:"爱丽丝",profile_picture_url:"none"},
     ]
 
     for(let i = 0;i < team_info["member"].length;i++)
@@ -106,49 +109,14 @@
                 });
         }
     }
-    console.log(member_list)
 </script>
 
 <template>
     <div id="bac"></div>
 
     <div id="lo">
-
         <div id="le">
-            <div id="le_top">{{ team_info["name"] }}</div>
-
-            <div id="le_sec">队伍描述：{{ team_info["describe"] }}</div>
-
-            <div style="display: flex;">
-                <div id="school">{{ team_info["school"] }}</div>
-                <div></div>
-            </div>
-
-            <div id="line"></div>
-
-            <!--队员信息-->
-            <div id="le_member">
-                <div class="le_member_i" v-for="(i, index) in member_list"
-                @click="router.push({path: '/user', query: {user_id: i['id'] }})"
-                :key="index">
-                    <div v-if="index === 0">
-                        <div class="mem_profile_picture"></div>
-
-                        <div style="margin-left: 15%;display: grid;">
-                            <div class="mem_name">队长 {{ i["name"] }}</div>
-                            <div class="mem_id">id: {{ i["id"] }}</div>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <div class="mem_profile_picture"></div>
-
-                        <div style="margin-left: 15%;display: grid;">
-                            <div class="mem_name">{{ i["name"] }}</div>
-                            <div class="mem_id">id: {{ i["id"] }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <team_module :team_info="team_info" :member_list="member_list"></team_module>
         </div>
 
         <div id="mi">
@@ -168,7 +136,7 @@
                         <div class="arc_pic"></div>
                         <div class="arc_title">{{ k["title"] }}</div>
                     </div>
-                    <div class="arc_add" v-if="props.current_user == route.query.user_id" @click="router.push({path: '/create_archive', query: { user_id: route.params.user_id,arc_id: i['id'] }})"></div>
+                    <div class="arc_add" v-if="member_list.some(i => i.id === props.current_user)" @click="router.push({path: '/create_archive', query: { user_id: route.params.user_id,room_id: j['id'] }})"></div>
                 </div>
             </div>
 
@@ -209,72 +177,7 @@
 #le{
     padding-left: 30px;
     padding-right: 30px;
-}
-
-#le_top{
-    margin-top: 30px;
-    color: #6B944F;
-    font-size: 2em;
-    font-weight:900;
-}
-
-#le_sec{
-    padding-top: 30px;
-    padding-bottom: 30px;
-    color: #A6E67B;
-    margin-top: 0.4em;
-    font-size: 1.5em;
-}
-
-#school{
-    background-color: #A6E67B;
-    color: white;
-    font-size: 1.5em;
-    margin-bottom: 30px;
-
-    height: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
-    border-radius: 1em;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#line{
-    border: #A6E67B 1px solid;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.le_member_i>*{    
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-
-    margin-bottom: 15px;
-}
-
-.mem_profile_picture{
-    background-image: url("/测试头像.jpg");
-    background-size: cover;
-    border-radius: 50%; 
-    border: 3px solid white;
-    position: relative;
-}
-
-.mem_name{
-    color: #6B944F;
-    font-size: 1.8em;
-    font-weight:900;
-    align-content: center;
-}
-
-.mem_id{
-    color: #6B944F;
-    margin-top: 0.4em;
-    font-size: 1.2em;
-    align-content: center;
+    height: min-content(100vh);
 }
 
 #mi{
