@@ -1,9 +1,10 @@
 <script setup>
     import { onMounted,reactive,ref,watch,defineProps } from 'vue';
-    import setting from "../src/components/setting.vue";
     import { useRouter } from 'vue-router';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
+
+    import team_module from '../src/components/team_module.vue';
 
     const props = defineProps({
         current_user: {
@@ -12,100 +13,27 @@
         }
     })
 
-
     let apiUrl = 'http://127.0.0.1:8000';
 
     const router = useRouter();
     const route = useRoute();
 
-    onMounted(() => {
-        let pic = document.getElementById("profile_picture")
-        pic.style.height = pic.offsetWidth + "px";
-    })
+    //此处通过archive_id查找到对应支教队id以及相关信息
+    let team_info = {
+        name: "春晖支教队",
+        id: -1,
+        school:"千年科技学院",
+        describe:"为什么游戏开发部会去支教？？",
+        member:[-1,-2,-3,-4,-5]
+    };
 
-    const windowWidth = ref(window.innerWidth);
-    const windowHeight = ref(window.innerHeight);
-
-    watch(
-    () => [windowWidth.value, windowHeight.value],
-    () => {
-        let pic = document.getElementById("profile_picture")
-        pic.style.height = pic.offsetWidth + "px";
-    }
-    );
-
-    window.addEventListener('resize', () => {
-    windowWidth.value = window.innerWidth
-    windowHeight.value = window.innerHeight
-    });
-
-    let user,teamlist = [];
-    let if_setting_open = ref(false);
-
-    //route.query.user_id <= 0
-    if(true)
-    {
-        user = reactive({
-            name:"爱丽丝",
-            ip:"千年",
-            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-            school:"千年科技学院",
-            team:[-1,-4,-3,-2]
-        })
-    }
-    else
-    {
-        //此处获取用户信息
-        axios.get(apiUrl + "/user/login-signup/user",{
-            })
-            .then(function (response) {
-                console.log(response)
-                user = reactive({
-                    name:"爱丽丝",
-                    ip:"千年",
-                    personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-                    school:"千年科技学院",
-                    team:[-1,-4,-3,-2]
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    for(let i = 0;i < user["team"].length;i++)
-    {
-        if(user["team"][i] < 0)
-        {
-            let add = {name:"千年游戏开发部第"+ i + "支教队",
-                id:i,
-                archiveroom:[
-                    {
-                        name:"玩档玩的",
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"日服结算室外GOZ大决战",id:112},
-                            {title:"总力室内黑白TM一图流参考",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                        ]
-                    },
-                    {
-                        name:"玩粥玩的",
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
-                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
-                        ]
-                    }
-                ]
-            }
-            teamlist.push(add)
-        }
-    }
+    const member_list = [
+        {id: -5,name:"邮箱大魔王",profile_picture_url:"none"},
+        {id: -2,name:"王小桃",profile_picture_url:"none"},
+        {id: -3,name:"王小绿",profile_picture_url:"none"},
+        {id: -4,name:"yuzi",profile_picture_url:"none"},
+        {id: -1,name:"爱丽丝",profile_picture_url:"none"},
+    ]
 
     let sum = [
         {
@@ -115,10 +43,7 @@
         {
             type:"text",
             content:"他们渴望走出大山，我们选择远赴千里;他们喜欢仰望星空，我们善于点亮希望;他们畅想诗和远方，我们播下种子，让未来不在苟且。"
-        },{
-            type:"pic",
-            file:"（文件放这里）"
-        }
+        },
     ];
     
     const mi_content = ref(null);
@@ -177,35 +102,11 @@
 </script>
 
 <template>
-    <setting v-if="if_setting_open" @setting_close="() => {if_setting_open = false}"/>
-
     <div id="bac"></div>
 
     <div id="lo">
         <div id="le">
-            <div id="le_top">
-                <div id="profile_picture">
-                    <div id="change_pic"></div>
-                </div>
-
-                <div style="margin-left: 5%;display: grid;">
-                    <div id="name">{{ user["name"] }}</div>
-                </div>
-            </div>
-
-            <div id="le_sec">个性签名：{{ user["personal_sign"] }}</div>
-
-            <div style="display: flex;">
-                <div id="school">{{ user["school"] }}</div><div></div>
-            </div>
-
-            <div id="le_fo"></div>
-            <div id="le_fi"></div>
-
-            <!--<div id="le_si">
-                <div id="le_si_2">修改资料</div>
-                <div id="le_si_1" @click="if_setting_open = true;"></div>
-            </div>-->
+            <team_module :team_info="team_info" :member_list="member_list"></team_module>
         </div>
 
         <div id="mi">

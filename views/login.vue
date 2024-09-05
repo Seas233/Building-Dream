@@ -43,18 +43,6 @@
 
     function sure_rejister()
     {
-        /*let res = {params: {
-            "email": yuka,
-            "name": document.getElementById("name").value,
-            "school": document.getElementById("school").value,
-            "personal_sign": document.getElementById("personal_sign").value,
-            "description": "string",
-            "coin": 0,
-            "image": 0,
-            "image_show": false,
-            "archives_show": false,
-            "id": 0
-            }};*/
         let res = {
             "username": document.getElementById("name").value,
             "password": "string",
@@ -64,7 +52,7 @@
         console.log(res);
         axios.post(apiUrl + "/user/login-signup/sign-up",res)
             .then(function (response){
-                //console.log(response);
+                alert('账户已经注册，将返回登录页！');
             })
             .catch(function (error){
                 console.log(error);
@@ -73,7 +61,8 @@
 
     function login()
     {
-        axios.post(apiUrl + "/",)
+        
+        axios.post(apiUrl + "/token",)
             .then(function (response){
                 //console.log(response);
                 router.push('/user/' + response)
