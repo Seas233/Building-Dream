@@ -1,17 +1,13 @@
 <script setup>
     import axios from 'axios';
-    import { ref } from 'vue';
+    import { ref, onUnmounted } from 'vue';
     import { useRouter } from 'vue-router';
 
     let apiUrl = 'http://127.0.0.1:8000';
-    let time_count = 0;
-    let condition = ref("login");
-
-    let yuka = '';
 
     let router = useRouter();
 
-    async function verify()
+    /*async function verify()
     {
         if(time_count + 30 * 1000 > Date.now())
         {
@@ -20,10 +16,9 @@
         else
         {
             time_count = Date.now();
-            let yuka_ele = document.getElementById("yuka");
-            yuka = yuka_ele.value;
-            /*{params: {"email": yuka}}*/
-            axios.post(apiUrl + "/user/login-signup/send-email",{"email": yuka})
+            let yuuka_ele = document.getElementById("yuuka");
+            yuuka = yuuka_ele.value;
+            axios.post(apiUrl + "/user/login-signup/send-email",{"email": yuuka})
                 .then(function (response) {
                     console.log(response);
                 })
@@ -31,35 +26,47 @@
                     console.log(error);
                 });
         }
-    }
+    }*/
 
-    function rejister()
-    {
-        if(true)
-        {
-            condition.value = "rejister";
-        }
-    }
+    //-----------------------------
 
-    function sure_rejister()
-    {
-        let res = {
-            "username": document.getElementById("name").value,
-            "password": "string",
-            "email": yuka,
-            "captcha": "string"
-        };
-        console.log(res);
-        axios.post(apiUrl + "/user/login-signup/sign-up",res)
-            .then(function (response){
-                alert('账户已经注册，将返回登录页！');
-            })
-            .catch(function (error){
-                console.log(error);
-            })
-    }
 
-    function login()
+    const buttonText = ref('验证');
+    const isCounting = ref(false);
+    let countdownTimer = null;
+
+    function startCountdown(){
+        if (isCounting.value) return; // 避免重复点击
+
+        isCounting.value = true;
+        let countdown = 30;
+        buttonText.value = countdown;
+
+        countdownTimer = setInterval(() => {
+            countdown--;
+            buttonText.value = countdown;
+
+            if (countdown <= 0) {
+            clearInterval(countdownTimer);
+            isCounting.value = false;
+            buttonText.value = '验证';
+            }
+        }, 1000);
+    };
+
+    // 清理定时器以防内存泄漏
+    onUnmounted(() => {
+    if (countdownTimer) {
+        clearInterval(countdownTimer);
+    }
+    });
+
+    //------------------------
+
+    let condition = ref("login");
+    let yuuka,password,v_code,v_code2 = 0,password2;
+
+    function sure_login()
     {
         
         axios.post(apiUrl + "/token",)
@@ -71,6 +78,39 @@
                 console.log(error);
             })
     }
+
+    function send_v_code()
+    {
+        if (isCounting.value) return; // 避免重复点击
+
+        //此处获取验证码
+        v_code2 = 1;
+
+        isCounting.value = true;
+        let countdown = 30;
+        buttonText.value = countdown;
+
+        countdownTimer = setInterval(() => {
+            countdown--;
+            buttonText.value = countdown;
+
+            if (countdown <= 0)
+            {
+                clearInterval(countdownTimer);
+                isCounting.value = false;
+                buttonText.value = '发送';
+            }
+        }, 1000);
+    }
+
+    function sure_rejister()
+    {
+        if(v_code != v_code2)
+        {
+            
+        }
+        condition.value = 'change_password';
+    }
 </script>
 
 <template>
@@ -81,47 +121,91 @@
 
                 <div id="lo_ui_input">
                     <div id="input_1">
-                        <div>邮  箱</div>
-                        <div style="margin-top: 1.5em;">验 证 码</div>
+                        <div>邮箱</div>
+                        <div style="margin-top: 1.5em;">密码</div>
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="yuka">
-                        <input type="text" name="" id="password" style="margin-top: 1.5em;">
+                        <input type="text" name="" id="yuuka" v-model="yuuka">
+                        <input type="text" name="" id="password" v-model="password" style="margin-top: 1.5em;">
                     </div>
                 </div>
 
                 <div id="lo_ui_but">
-                    <div @click="verify">验证</div>
-                    <div @click="rejister" style="margin-left: 1.5em;">注册</div>
-                    <div @click="login" style="margin-left: 1.5em;">登录</div>
+                    <div @click="condition = 'rejister'">注册</div>
+                    <div @click="condition = 'forget'" style="margin-left: 1.5em;">忘记密码</div>
+                    <div @click="sure_login" style="margin-left: 1.5em;">登录</div>
                 </div>
             </div>
 
             <div v-if="condition == 'rejister'">
-                <div id="lo_ui_head">完善个人信息</div>
+                <div id="lo_ui_head">注册</div>
 
                 <div id="lo_ui_input">
                     <div id="input_1">
-                        <div>姓  名</div>
-                        <div style="margin-top: 1.5em;">密  码</div>
+                        <div>邮箱</div>
+                        <div style="margin-top: 1.5em;">验证码</div>
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="name">
-                        <input type="text" name="" id="password" style="margin-top: 1.5em;">
+                        <input type="text" name="" id="yuuka">
+
+                        <div id="v_code_box">
+                            <input type="text" name="" id="v_code" v-model="v_code">
+                            <div></div>
+                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : ( buttonText == '验证' ? '#A6E67B' : '#C4C4C4' )}">{{ buttonText }}</div>
+                        </div>
                     </div>
                 </div>
 
                 <div id="lo_ui_but">
-                    <div @click="sure_rejister">确认</div>
+                    <div @click="sure_rejister">注册</div>
                 </div>
             </div>
-        </div> 
 
-        <div id="lo_ele">
-            <div id="lo_ele_1">
-                <div id="lo_ele_2"></div>
+            <div v-if="condition == 'forget'">
+                <div id="lo_ui_head">忘记密码</div>
+
+                <div id="lo_ui_input">
+                    <div id="input_1">
+                        <div>邮箱</div>
+                        <div style="margin-top: 1.5em;">验证码</div>
+                    </div>
+                    <div id="input_2"></div>
+                    <div id="input_3">
+                        <input type="text" name="" id="yuuka">
+
+                        <div id="v_code_box">
+                            <input type="text" name="" id="v_code" v-model="v_code">
+                            <div></div>
+                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : ( buttonText == '验证' ? '#A6E67B' : '#C4C4C4' )}">{{ buttonText }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lo_ui_but">
+                    <div @click="sure_change">验证</div>
+                </div>
+            </div>
+
+            <div v-if="condition == 'change_password'">
+                <div id="lo_ui_head">修改密码</div>
+
+                <div id="lo_ui_input">
+                    <div id="input_1">
+                        <div>密码</div>
+                        <div style="margin-top: 1.5em;">确认密码</div>
+                    </div>
+                    <div id="input_2"></div>
+                    <div id="input_3">
+                        <input type="text" name="" id="password" v-model="password">
+                        <input type="text" name="" id="password2" v-model="password2" style="margin-top: 1.5em;">
+                    </div>
+                </div>
+
+                <div id="lo_ui_but">
+                    <div @click="">修改</div>
+                </div>
             </div>
         </div>
     </div>
@@ -144,12 +228,11 @@
     position: absolute;
     z-index: 1000;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: center;
     align-items: center;
 }
 
 #lo_ui>*{
-    margin-right: 100px;
     background-color: rgba(256,256,256,0.6);
     display: flex;
     flex-direction: column;
@@ -193,12 +276,41 @@
     flex-direction: column;
 }
 
-#input_3>*{
+#v_code_box{
+    display: grid;
+    grid-template-columns: 7fr 1fr 3fr;
+    margin-top: 3em;
+}
+
+#v_code_button{
+    background-color: #A6E67B;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 3em;
+    font-size: 2em;
+
+    color: white;
+}
+
+#input_3>input{
     font-size: 2em;
     color: black;
     background-color: white;
     height: 2em;
     width: 11em;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#v_code{
+    font-size: 2em;
+    color: black;
+    background-color: white;
+    height: 2em;
+    width: 7em;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -209,7 +321,7 @@
 }
 
 #lo_ui_but>*{
-    width: 3em;
+    width: 6em;
     height: 2em;
 
     font-size: 1.5em;
@@ -225,34 +337,5 @@
 #lo_ui_but>*:hover{
     color: white;
     background-color: #A6E67B;
-}
-
-#lo_ele
-{
-    position: absolute;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-#lo_ele_1{
-    margin-left: 100px;
-    margin-bottom: 20px;
-    height: 80%;
-    background-image: url("/login_bac_white_pep.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-#lo_ele_2{
-    height: 50%;
-    background-image: url("/login_bac_green_pep.png");
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 </style>
