@@ -1,7 +1,10 @@
 <script setup>
     import { useRouter } from 'vue-router';
+    import { defineEmits } from 'vue';
 
     const router = useRouter();
+
+    const emit = defineEmits(['change_info','create_team']);
 
     const props = defineProps({
         user:{
@@ -38,9 +41,11 @@
         <div class="le_team_i" v-for="i in props.teamlist" @click="router.push({path: '/team', query: {team_id: i['id'] }})">{{ i["name"] }}</div>
     </div>
 
+    <div id="line"></div>
+
     <div id="le_si">
-        <div id="le_si_2">修改资料</div>
-        <div id="le_si_1" @click="if_setting_open = true;"></div>
+        <div @click="emit('change_info')">修改资料</div>
+        <div @click="emit('create_team')">新建队伍</div>
     </div>
 </template>
 
@@ -109,6 +114,12 @@
     justify-content: center;
 }
 
+#line{
+    border: #A6E67B 1px solid;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
 .le_team_i{
     background-color: #b3f0a2;
     color: white;
@@ -125,38 +136,23 @@
 }
 
 #le_si{
-    display: flex;
-    flex-direction: row-reverse;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-#le_si_1{
-    background-image: url("/设置_白.png");
-    background-repeat: no-repeat;
-    background-size: 24px 24px;
-    background-position: center center;
-
-    background-color: #A6E67B;
-    border-radius: 15px;
-    width: 60px;
-    height: 30px;
-}
-
-#le_si_2{
-    background-color: #A6E67B;
-    border-radius: 15px;
-    height: 30px;
-    padding-left: 2em;
-    padding-right: 2em;
+#le_si>*{
+    background-color: #b3f0a2;
+    border-radius: 1em;
+    height: 2em;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    margin-left: 30px;
-
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: white;
 }
 </style>

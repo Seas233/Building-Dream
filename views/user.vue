@@ -1,10 +1,12 @@
 <script setup>
-    import { onMounted,reactive,ref,watch,defineProps } from 'vue';
+    import { onMounted,reactive,ref,watch } from 'vue';
     import { useRouter } from 'vue-router';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
 
     import user_module from '../src/components/user_module.vue';
+    import change_info from '../src/components/change_info.vue';
+    import create_team from '../src/components/create_team.vue';
     
     const props = defineProps({
         current_user: {
@@ -38,29 +40,15 @@
     });
 
     let user,teamlist = [];
+    let state = ref('none');
 
-    if(route.query.user_id <= 0)
-    {
-        user = reactive({
-            name:"爱丽丝",
-            id:-1,
-            ip:"千年",
-            personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-            school:"千年科技学院",
-            team:[-1,-4,-3,-2]
-        })
-    }
-    else
-    {
-        //此处获取用户信息
-        /*axios.post(apiUrl + "",{
-            })
-            .then(function (response) {
-                user = response;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });*/
+    user = {
+        name:"爱丽丝",
+        id:-1,
+        ip:"千年",
+        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
+        school:"千年科技学院",
+        team:[-1,-4,-3,-2]
     }
 
     for(let i = 0;i < user["team"].length;i++)
@@ -101,12 +89,14 @@
 </script>
 
 <template>
-
     <div id="bac"></div>
 
     <div id="lo">
         <div id="le">
-            <user_module :user="user" :teamlist="teamlist"></user_module>
+            <user_module :user="user" :teamlist="teamlist"
+            @change_info="() => {state = 'change_info'}"
+            @create_team="() => {state = 'create_team'}"
+            ></user_module>
         </div>
 
         <div id="mi">
@@ -136,11 +126,11 @@
 
         <div></div>
 
-        <!--<div id="ri">
-            
-            <div id="ri_pic_bac"></div>
-            <div id="ri_pic"></div>
-        </div>-->
+        <change_info v-if="state == 'change_info'" :user="user"
+        @cancel="state = none"></change_info>
+
+        <create_team v-if="state == 'create_team'" :user="user"
+        @cancel="state = none"></create_team>
 
         <div></div>
     </div>
@@ -259,45 +249,5 @@
     background-repeat: no-repeat;
     background-position: center center;
     border-radius: 20px;
-}
-
-/*施工区末端 */
-
-#ri{
-    position: relative;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-
-    height: 100%;
-    width: 100%;
-}
-
-#ri_pic_bac{
-    background-image: url("/人物背景.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    
-    width: 80%;
-    height: 100%;
-    bottom: 60px;
-
-    position: absolute;
-    z-index: 1;
-    bottom: 0px;
-}
-
-#ri_pic{
-    background-image: url("/女1成.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    
-    width: 40%;
-    height: 700px;
-
-    position: absolute;
-    z-index: 3;
 }
 </style>
