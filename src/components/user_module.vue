@@ -50,8 +50,6 @@
 </template>
 
 <style scoped>
-
-
 #le_top{
     display: grid;
     grid-template-columns: 1fr 2fr;
