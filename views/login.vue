@@ -126,8 +126,8 @@
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="yuuka" v-model="yuuka">
-                        <input type="text" name="" id="password" v-model="password" style="margin-top: 1.5em;">
+                        <input type="email" name="" id="yuuka" v-model="yuuka">
+                        <input type="password" name="" id="password" v-model="password" style="margin-top: 1.5em;">
                     </div>
                 </div>
 
@@ -148,7 +148,7 @@
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="yuuka">
+                        <input type="eamil" name="" id="yuuka" v-model="yuuka">
 
                         <div id="v_code_box">
                             <input type="text" name="" id="v_code" v-model="v_code">
@@ -173,7 +173,7 @@
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="yuuka">
+                        <input type="email" name="" id="yuuka">
 
                         <div id="v_code_box">
                             <input type="text" name="" id="v_code" v-model="v_code">
@@ -189,7 +189,7 @@
             </div>
 
             <div v-if="condition == 'change_password'">
-                <div id="lo_ui_head">修改密码</div>
+                <div id="lo_ui_head">设置密码</div>
 
                 <div id="lo_ui_input">
                     <div id="input_1">
@@ -198,8 +198,8 @@
                     </div>
                     <div id="input_2"></div>
                     <div id="input_3">
-                        <input type="text" name="" id="password" v-model="password">
-                        <input type="text" name="" id="password2" v-model="password2" style="margin-top: 1.5em;">
+                        <input type="password" name="" id="password" v-model="password">
+                        <input type="password" name="" id="password2" v-model="password2" style="margin-top: 1.5em;">
                     </div>
                 </div>
 
