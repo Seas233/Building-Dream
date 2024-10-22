@@ -1,8 +1,15 @@
 <script setup>
-    import { useRouter } from 'vue-router';
+    import { stringifyQuery, useRouter } from 'vue-router';
     import axios from 'axios';
 
     const router = useRouter();
+
+    const props = defineProps({
+        apiUrl:{
+            type: String,
+            default: ""
+        },
+    })
 
     //获取list，一串档案室的id
     //axios()
@@ -10,28 +17,44 @@
     //根据档案室id查找
     let archiverooms = [
         {
-            team_name:'千年游戏开发部第一支教队',
-            name:"玩档玩的",
+            team_name:'春晖支教团',
+            name:"“潍”子送芳",
             id:1,
             create_time:"2024年8月21日",
             latest_time:"2024年8月25日",
             archive:[
-                {title:"日服结算室外GOZ大决战",id:112},
-                {title:"总力室内黑白TM一图流参考",id:113},
-                {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                {title:"梦想麦田，支教启航",id:112},
+                {title:"支教进行时",id:113},
+                {title:"叮铃铃，上课啦！",id:113},
+                {title:"大合照",id:113},
             ]
         },
         {
-            team_name:'千年游戏开发部第一支教队',
-            name:"玩粥玩的",
+            team_name:'春晖支教团',
+            name:"贵州支教记",
             id:2,
+            create_time:"2023年3月1日",
+            latest_time:"2023年8月25日",
+            archive:[
+                {title:"走进大山",id:112},
+                {title:"孩子们的笑颜",id:113},
+                {title:"记山中小学的一天",id:113},
+                {title:"记山中小学的一天2",id:113},
+                {title:"记山中小学的一天3",id:113},
+                {title:"再见，再见",id:113},
+            ]
+        },
+        {
+            team_name:'小树林支教队',
+            name:"科彩启航",
+            id:1,
             create_time:"2024年8月21日",
             latest_time:"2024年8月25日",
             archive:[
-                {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
-                {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
+                {title:"梦想麦田，支教启航",id:112},
+                {title:"支教进行时",id:113},
+                {title:"叮铃铃，上课啦！",id:113},
+                {title:"大合照",id:113},
             ]
         }
     ]
@@ -50,7 +73,7 @@
             <div id="mi_head">档案推荐</div>
             
             <div class="room_" v-for="j in archiverooms">
-                <div class="team_head">{{ j["team_name"] }}</div>
+                <div class="team_head" @click="router.push({path: '/team', query: {team_id: j['id'] }})">{{ j["team_name"] }}</div>
 
                 <div class="room_head">档案室：{{ j["name"] }}</div>
 
@@ -169,5 +192,6 @@
 
 .arc_title{
     font-size: 1.1em;
+    text-align: center;
 }
 </style>

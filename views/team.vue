@@ -43,37 +43,40 @@
 
     let team_info,member_list = [],archiveroom = [];
 
-    if(route.query.team_id < 10)
+    if(true)
     {
         team_info = {
             name: "春晖支教队",
             id: -1,
-            school:"千年科技学院",
-            describe:"为什么游戏开发部会去支教？？",
+            school:"山东大学",
+            describe:"来自山东大学的支教团队",
             member:[-1,-2,-3,-4,-5]
         };
         archiveroom = [
             {
-                name:"玩档玩的",
+                name:"“潍”子送芳",
                 id:1,
                 create_time:"2024年8月21日",
                 latest_time:"2024年8月25日",
                 archive:[
-                    {title:"日服结算室外GOZ大决战",id:112},
-                    {title:"总力室内黑白TM一图流参考",id:113},
-                    {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                    {title:"10.10-10.16 防御演习 室内重甲",id:113},
+                    {title:"梦想麦田，支教启航",id:112},
+                    {title:"支教进行时",id:113},
+                    {title:"叮铃铃，上课啦！",id:113},
+                    {title:"大合照",id:113},
                 ]
             },
             {
-                name:"玩粥玩的",
+                name:"贵州支教记",
                 id:2,
-                create_time:"2024年8月21日",
-                latest_time:"2024年8月25日",
+                create_time:"2023年3月1日",
+                latest_time:"2023年8月25日",
                 archive:[
-                    {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                    {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
-                    {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
+                    {title:"走进大山",id:112},
+                    {title:"孩子们的笑颜",id:113},
+                    {title:"记山中小学的一天",id:113},
+                    {title:"记山中小学的一天2",id:113},
+                    {title:"记山中小学的一天3",id:113},
+                    {title:"再见，再见",id:113},
                 ]
             }
         ]
@@ -83,11 +86,11 @@
     }
 
     const test_member_info = [
-        {id: -5,name:"邮箱大魔王",profile_picture_url:"none"},
-        {id: -2,name:"王小桃",profile_picture_url:"none"},
-        {id: -3,name:"王小绿",profile_picture_url:"none"},
-        {id: -4,name:"yuzi",profile_picture_url:"none"},
-        {id: -1,name:"爱丽丝",profile_picture_url:"none"},
+        {id: 1005,name:"张盈婷",profile_picture_url:"none"},
+        {id: 1002,name:"徐畅",profile_picture_url:"none"},
+        {id: 1003,name:"孙钺涛",profile_picture_url:"none"},
+        {id: 1004,name:"傅思远",profile_picture_url:"none"},
+        {id: 1001,name:"张锦涛",profile_picture_url:"none"},
     ]
 
     for(let i = 0;i < team_info["member"].length;i++)
@@ -250,6 +253,7 @@
 
 .arc_title{
     font-size: 1.1em;
+    text-align: center;
 }
 
 .arc_add{

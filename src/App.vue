@@ -7,12 +7,13 @@
     //router.push('/main');
 
     let current_user = -1;
+    let tooken = '';
 
     //检查登录
     router.beforeEach(async (to, from) => {
         if(current_user == 0 && to.name == 'user')
         {
-            return { name: 'login'}
+            return { name: 'login'};
         }
     })
 </script>
@@ -30,7 +31,10 @@
         </div>
     </div>
 
-    <router-view :current_user=current_user></router-view>
+    <router-view :current_user=current_user :tooken="tooken"
+        @change_token="(i) => {token = i}"
+        :apiUrl="'http://127.0.0.1:8000'">
+    </router-view>
 
    <div id="app_buttom"></div>
 </template>

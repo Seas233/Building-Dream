@@ -43,49 +43,67 @@
     let state = ref('none');
 
     user = {
-        name:"爱丽丝",
+        name:"张盈婷",
         id:-1,
-        ip:"千年",
-        personal_sign:"爱丽丝错了爱丽丝不该在网上口嗨的",
-        school:"千年科技学院",
-        team:[-1,-4,-3,-2]
+        ip:"山东",
+        personal_sign:"默认签名，献给每一位支教的小伙伴！",
+        school:"山东大学",
+        team:[-1,2]
     }
 
-    for(let i = 0;i < user["team"].length;i++)
-    {
-        if(user["team"][i] < 0)
+    teamlist = [
         {
-            let add = {name:"千年游戏开发部第"+ i + "支教队",
-                id:i,
-                archiveroom:[
-                    {
-                        name:"玩档玩的",
-                        id:1,
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"日服结算室外GOZ大决战",id:112},
-                            {title:"总力室内黑白TM一图流参考",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                            {title:"10.10-10.16 防御演习 室内重甲",id:113},
-                        ]
-                    },
-                    {
-                        name:"玩粥玩的",
-                        id:2,
-                        create_time:"2024年8月21日",
-                        latest_time:"2024年8月25日",
-                        archive:[
-                            {title:"AS-S1~4低配平民全关卡攻略！",id:112},
-                            {title:"AS-S1~5摆完半挂机全关卡攻略！",id:113},
-                            {title:"小丘郡剿灭摆完挂机全关卡攻略！",id:113},
-                        ]
-                    }
-                ]
-            }
-            teamlist.push(add)
-        }
-    }
+            name:"春晖支教队",
+            id:10001,
+            archiveroom:[
+                {
+                    name:"“潍”子送芳",
+                    id:1,
+                    create_time:"2024年8月21日",
+                    latest_time:"2024年8月25日",
+                    archive:[
+                        {title:"梦想麦田，支教启航",id:112},
+                        {title:"支教进行时",id:113},
+                        {title:"叮铃铃，上课啦！",id:113},
+                        {title:"大合照",id:113},
+                    ]
+                },
+                {
+                    name:"贵州支教记",
+                    id:2,
+                    create_time:"2023年3月1日",
+                    latest_time:"2023年8月25日",
+                    archive:[
+                        {title:"走进大山",id:112},
+                        {title:"孩子们的笑颜",id:113},
+                        {title:"记山中小学的一天",id:113},
+                        {title:"记山中小学的一天2",id:113},
+                        {title:"记山中小学的一天3",id:113},
+                        {title:"再见，再见",id:113},
+                    ]
+                }
+            ]
+        },
+        {
+            name:"小树林支教队",
+            id:10002,
+            archiveroom:[
+                {
+                    name:"科彩启航",
+                    id:1,
+                    create_time:"2024年8月21日",
+                    latest_time:"2024年8月25日",
+                    archive:[
+                        {title:"梦想麦田，支教启航",id:112},
+                        {title:"支教进行时",id:113},
+                        {title:"叮铃铃，上课啦！",id:113},
+                        {title:"大合照",id:113},
+                    ]
+                },
+            ]
+        },
+    ]
+    
 </script>
 
 <template>
@@ -238,6 +256,7 @@
 
 .arc_title{
     font-size: 1.1em;
+    text-align: center;
 }
 
 .arc_add{

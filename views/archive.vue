@@ -22,32 +22,51 @@
     let team_info = {
         name: "春晖支教队",
         id: -1,
-        school:"千年科技学院",
+        school:"山东大学",
         describe:"为什么游戏开发部会去支教？？",
         member:[-1,-2,-3,-4,-5]
     };
 
     const member_list = [
-        {id: -5,name:"邮箱大魔王",profile_picture_url:"none"},
-        {id: -2,name:"王小桃",profile_picture_url:"none"},
-        {id: -3,name:"王小绿",profile_picture_url:"none"},
-        {id: -4,name:"yuzi",profile_picture_url:"none"},
-        {id: -1,name:"爱丽丝",profile_picture_url:"none"},
+        {id: 1005,name:"张盈婷",profile_picture_url:"none"},
+        {id: 1002,name:"徐畅",profile_picture_url:"none"},
+        {id: 1003,name:"孙钺涛",profile_picture_url:"none"},
+        {id: 1004,name:"傅思远",profile_picture_url:"none"},
+        {id: 1001,name:"张锦涛",profile_picture_url:"none"},
     ]
 
     let sum = [
         {
             type:"title",
-            content:"一棵树摇动另一棵树，一朵云推动另一朵云",
+            content:"梦想麦田，支教启航",
         },
         {
             type:"text",
-            content:"他们渴望走出大山，我们选择远赴千里;他们喜欢仰望星空，我们善于点亮希望;他们畅想诗和远方，我们播下种子，让未来不在苟且。"
+            content:"昨天，我们开启了我们的第一次潍坊支教活动。这几天像做梦一样，犹记得我们前天上午坐上了去高密的高铁，那天天气很好，到达高密北站的时候，我抬头望天，漂亮的落日云霞，让我出神了许久，这样的美景让我不由得对未知的高密支教之旅满怀期待起来。"
+        },
+        {
+            type:"text",
+            content:'我们出高铁站时，天色逐渐暗淡了下来，我们本打算乘乡镇公交抵达村子里，但附近的村民告诉我抵达村子里的公交早在五点钟就没了，我们便打算乘坐出租车前往。出租车行驶在一望无际的田野，车子穿梭在绿油油的麦田里，远离了城市的喧嚣，我很享受那一刻窗外呼啸而过的风声。不知过了多久，我们便来到了高密密水街道的西周阳村。下了车，我环顾四周，来到了熟悉的乡下，像是回归故土般，我好奇地观察着周围的人和物。几位好心的大娘打量了几眼我们，就说你们是新来村子里支教的大学生吧，我们礼貌地点头。其中一个大娘说天色已经晚了，路不好走，骑着电动车打开车灯给我们带路，就这样，我们提着行李箱，走在崎岖不平的泥路上，鞋上已经满是污泥，那也是第一次对未来两周的支教生活有了些许担忧。走在半路上，我们遇到了迎面而来的赵老师，她是英华学堂爱心小院的院长也是这里唯一的老师，他很热情地向我们招手，也给我们带来了一份礼物。'
+        },
+        {
+            type:"pic",
+            url:'/测试/P1.jpg',
+        },
+        {
+            type:"text",
+            content:'赵老师把我们安顿好之后，对我们说，虽然房子是比较旧的，但房子里面的物件是新的，也为我们安置了空调和外出采购生活物品的两辆新的电动车，我们很感谢赵老师的帮助。'
+        },
+        {
+            type:"text",
+            content:'第二天就迎来了我们支教的开营仪式。开营仪式上孩子们对我们这些生面孔还是显得有些局促不安，我们就跟孩子们玩起了击鼓传花的小游戏，让孩子们能够尽快地熟悉我们。游戏开始！大家显得都很兴奋，击鼓传花传到的同学，便会腼腆起来，可能是因为要介绍一下自己。不过在这个过程中，有一个同学很是活泼，刚开始介绍自己的时候虽然有点紧张结巴，但当他谈及自己的爱好时，很激动地说着自己最喜欢的动漫是火影忍者，最喜欢的角色是带土，大声地向全班说以后想成为拥有火之意志的人！当大家哄堂大笑的时候，我看到了他眼神里的坚定，很纯粹。'
+        },
+        {
+            type:"text",
+            content:'我们的支教之旅才刚刚开始，相信之后，我们将继续书写更精彩的故事！'
         },
     ];
     
     const mi_content = ref(null);
-
     //初始加载
     onMounted(() => {
         for(let i = 0;i < sum.length;i++)
@@ -74,7 +93,8 @@
             {
                 let i_ele = document.createElement("img");
 
-                i_ele.src = URL.createObjectURL(sum[i]["file"]);
+                //i_ele.src = URL.createObjectURL(sum[i]["file"]);
+                i_ele.src = sum[i]["url"];
                 i_ele.width = "100%";
                 i_ele.className = "ar__mi_cont_pic";
                 mi_content.value.appendChild(i_ele);

@@ -1,58 +1,23 @@
 <script setup>
     import axios from 'axios';
-    import { ref, onUnmounted } from 'vue';
+    import { ref, onUnmounted, defineEmits } from 'vue';
     import { useRouter } from 'vue-router';
 
-    let apiUrl = 'http://127.0.0.1:8000';
-
     let router = useRouter();
+    const emit = defineEmits(['cancel'])
 
-    /*async function verify()
-    {
-        if(time_count + 30 * 1000 > Date.now())
-        {
-            console.log("请等待" + Math.trunc((time_count + 30 * 1000 - Date.now()) / 1000) + "秒再发送验证码")
-        }
-        else
-        {
-            time_count = Date.now();
-            let yuuka_ele = document.getElementById("yuuka");
-            yuuka = yuuka_ele.value;
-            axios.post(apiUrl + "/user/login-signup/send-email",{"email": yuuka})
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-    }*/
+    const props = defineProps({
+        apiUrl:{
+            type: String,
+            default: ""
+        },
+    })
 
     //-----------------------------
-
 
     const buttonText = ref('验证');
     const isCounting = ref(false);
     let countdownTimer = null;
-
-    function startCountdown(){
-        if (isCounting.value) return; // 避免重复点击
-
-        isCounting.value = true;
-        let countdown = 30;
-        buttonText.value = countdown;
-
-        countdownTimer = setInterval(() => {
-            countdown--;
-            buttonText.value = countdown;
-
-            if (countdown <= 0) {
-            clearInterval(countdownTimer);
-            isCounting.value = false;
-            buttonText.value = '验证';
-            }
-        }, 1000);
-    };
 
     // 清理定时器以防内存泄漏
     onUnmounted(() => {
@@ -65,11 +30,12 @@
 
     let condition = ref("login");
     let yuuka,password,v_code,v_code2 = 0,password2;
+    let buttonColor = ref('#A6E67B');
 
     function sure_login()
     {
         
-        axios.post(apiUrl + "/token",)
+        let back = axios.post(url = apiUrl + "/token",)
             .then(function (response){
                 //console.log(response);
                 router.push('/user/' + response)
@@ -77,6 +43,7 @@
             .catch(function (error){
                 console.log(error);
             })
+        this.$emit('event-name', param);
     }
 
     function send_v_code()
@@ -84,7 +51,10 @@
         if (isCounting.value) return; // 避免重复点击
 
         //此处获取验证码
-        v_code2 = 1;
+        v_code2 = axios.post(props.apiUrl + '/user/login-signup/send-email',
+        {
+            "email": yuuka
+        });
 
         isCounting.value = true;
         let countdown = 30;
@@ -99,6 +69,7 @@
                 clearInterval(countdownTimer);
                 isCounting.value = false;
                 buttonText.value = '发送';
+                buttonColor.value = '#A6E67B'
             }
         }, 1000);
     }
@@ -153,7 +124,7 @@
                         <div id="v_code_box">
                             <input type="text" name="" id="v_code" v-model="v_code">
                             <div></div>
-                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : ( buttonText == '验证' ? '#A6E67B' : '#C4C4C4' )}">{{ buttonText }}</div>
+                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : buttonColor}">{{ buttonText }}</div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +149,7 @@
                         <div id="v_code_box">
                             <input type="text" name="" id="v_code" v-model="v_code">
                             <div></div>
-                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : ( buttonText == '验证' ? '#A6E67B' : '#C4C4C4' )}">{{ buttonText }}</div>
+                            <div @click="send_v_code" id="v_code_button" :style="{'background-color' : buttonColor}">{{ buttonText }}</div>
                         </div>
                     </div>
                 </div>
