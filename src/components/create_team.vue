@@ -1,7 +1,7 @@
 <script setup>
     import { useRouter } from 'vue-router';
     import { defineEmits } from 'vue';
-import axios from 'axios';
+    import axios from 'axios';
 
     const router = useRouter();
     const emit = defineEmits(['cancel'])
